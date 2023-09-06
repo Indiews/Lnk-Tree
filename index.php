@@ -1,20 +1,154 @@
+<?php // Include the database configuration
+    include('config.php');?>
+
 <!DOCTYPE html>
-<html  lang="en">
+<html lang="<?php
+    // Create a SQL query to retrieve the webname, lang, and description
+    $sql = "SELECT `lang` FROM `website`";
+
+    // Execute the query
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // Data found, loop through the results
+        while ($row = $result->fetch_assoc()) {
+            $lang = $row["lang"];
+
+            echo "$lang";
+        }
+    }
+    ?>">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Lnk Tree</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+    <meta name='robots' content='index, follow'/>
+    <meta name='rating' content='safe for kids'/>
+
+    <!-- Lnk Tree created by Indiews - Digital Agency -->
+
+    <title><?php
+    // Create a SQL query to retrieve the webname, lang, and description
+    $sql = "SELECT `webname` FROM `website`";
+    // Execute the query
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // Data found, loop through the results
+        while ($row = $result->fetch_assoc()) {
+            $webname = $row["webname"];
+            
+            // Display the data for each row
+            echo "$webname";
+        }
+    }
+    ?></title>
+    
+
+    <meta name="twitter:description" content="<?php
+    // Create a SQL query to retrieve the webname, lang, and description
+    $sql = "SELECT `description` FROM `website`";
+
+    // Execute the query
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // Data found, loop through the results
+        while ($row = $result->fetch_assoc()) {
+            $description = $row["description"];
+
+            echo "$description";
+
+        }
+    }
+    ?>">
+    
+    <meta name="description" content="<?php
+    // Create a SQL query to retrieve the webname, lang, and description
+    $sql = "SELECT `description` FROM `website`";
+    // Execute the query
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // Data found, loop through the results
+        while ($row = $result->fetch_assoc()) {
+            $description = $row["description"];
+
+            echo "$description";
+
+        }
+    }
+    ?>">
+    
+    <meta name="twitter:title" content="<?php
+    // Create a SQL query to retrieve the webname, lang, and description
+    $sql = "SELECT `webname` FROM `website`";
+    // Execute the query
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // Data found, loop through the results
+        while ($row = $result->fetch_assoc()) {
+            $webname = $row["webname"];
+            
+            // Display the data for each row
+            echo "$webname";
+        }
+    }
+    ?>">
+    <link rel="stylesheet" href="assets/css/style.css"> 
+
 </head>
 
-<body style="text-align: center;">
-    <div style="margin-top: 24px;"><img src="assets/img/avatars/avatar5.jpeg"></div>
-    <div style="margin-top: 24px;"><button class="btn btn-primary" type="button" style="background: rgb(0,0,0);border-radius: 0px;">Button 1</button></div>
-    <div style="margin-top: 24px;"><button class="btn btn-primary" type="button" style="background: rgb(0,0,0);border-radius: 0px;">Button 2</button></div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/script.min.js"></script>
+<body>
+    <!-- User Photo -->
+    <img id="userPhoto" src="<?php
+    // Create a SQL query to retrieve the logo
+    $sql = "SELECT `logo` FROM `website`";
+    // Execute the query
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // Data found, loop through the results
+        while ($row = $result->fetch_assoc()) {
+            $logo = $row["logo"];
+            
+            // Display the data for each row
+            echo "$logo";
+        }
+    }
+    ?>" alt="<?php
+    // Create a SQL query to retrieve the webname, lang, and description
+    $sql = "SELECT `webname` FROM `website`";
+    // Execute the query
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // Data found, loop through the results
+        while ($row = $result->fetch_assoc()) {
+            $webname = $row["webname"];
+            
+            // Display the data for each row
+            echo "$webname";
+        }
+    }
+    ?>">
+    
+    <!-- Link Buttons -->
+    <div id="links">
+        <a class="link" href="https://ptanime.com" target="_blank">Website</a>
+        <a class="link" href="https://discord.gg/xnGQFgg2YR" target="_blank">Discord</a>
+        <a class="link" href="https://bit.ly/39YtqKF" target="_blank">Twitch</a>
+        <a class="link" href="https://www.instagram.com/ptanime/" target="_blank">Instagram</a>
+        <a class="link" href="http://bit.ly/34ZLHUD" target="_blank">Youtube</a>
+        <a class="link" href="https://twitter.com/ptAnime_oficial" target="_blank">Twitter</a>
+        <a class="link" href="https://ptani.me/r/ptanimemeshi" target="_blank">ptanimemeshi na Prozis</a>
+        <a class="link" href="https://www.pamp.pt/" target="_blank">PAMP</a>
+        
+      
+    </div>
+
+    
 </body>
 
 </html>
