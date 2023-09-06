@@ -5,7 +5,7 @@
 ?>
 
 <!DOCTYPE html>
-<html data-bs-theme="light" lang="en">
+<html  lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -21,7 +21,7 @@
         // Include the sidebar.php file
         include('includes/sidebar.php');
         ?>
-        
+
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
         

@@ -3,7 +3,7 @@
         include('includes/check-login.php');
 ?>
 <!DOCTYPE html>
-<html data-bs-theme="light" lang="en">
+<html  lang="en">
 
 <head>
     <meta charset="utf-8">

@@ -10,7 +10,7 @@ if (isset($_SESSION['email'])) {
 ?>
 
 <!DOCTYPE php>
-<php data-bs-theme="light" lang="en">
+<php  lang="en">
 
 <head>
     <meta charset="utf-8">
