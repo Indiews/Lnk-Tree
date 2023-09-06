@@ -1,3 +1,7 @@
+<?php
+        // Check if login is made
+        include('includes/check-login.php');
+?>
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
 

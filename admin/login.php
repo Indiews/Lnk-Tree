@@ -1,3 +1,14 @@
+<?php
+session_start();
+
+// Check if the user is logged in
+if (isset($_SESSION['email'])) {
+    // If logged in, redirect to the dashboard
+    header("Location: dashboard.php"); 
+    exit();
+}
+?>
+
 <!DOCTYPE php>
 <php data-bs-theme="light" lang="en">
 
