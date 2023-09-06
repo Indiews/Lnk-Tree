@@ -24,10 +24,7 @@
 
                                         // Display the user's first and last name
                                         echo "Welcome, $firstName $lastName!";
-                                    } else {
-                                        // User not found in the database, handle accordingly
-                                        echo "User not found.";
-                                    }
+                                    } 
                                 }
                                     ?>
                                 </span></a>

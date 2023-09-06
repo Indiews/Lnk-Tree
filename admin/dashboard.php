@@ -24,8 +24,9 @@
         ?>
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
-            <?php
-        // Include the sidebar.php file
+        
+        <?php
+        // Include the NavBar file
         include('includes/nav-top.php');
         ?>
                 <div class="container-fluid">
