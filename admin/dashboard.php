@@ -110,7 +110,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col"><iframe style="width: 95%; height: 50%;" src="../" title="Preview"></iframe></div>
+                        <div class="col"><iframe style="height: 300px; width: 95%; " src="../" title="Preview"></iframe></div>
                     </div>
                 </div>
                 <footer class="bg-white sticky-footer">
