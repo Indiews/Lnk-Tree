@@ -97,6 +97,14 @@
     }
     ?>">
     <link rel="stylesheet" href="assets/css/style.css"> 
+    <style>
+    
+    :root {
+    --bgColor: #3e3751;
+    --accentColor: #ffffff; 
+    --font: 'Poppins', sans-serif;;
+    }
+    </style>
 
 </head>
 

@@ -1,10 +1,5 @@
 /* Style Settings */
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-:root {
-    --bgColor: #3e3751;
-    --accentColor: #ffffff; 
-    --font: 'Poppins', sans-serif;;
-}
 
 body{
     background-color: var(--bgColor);
