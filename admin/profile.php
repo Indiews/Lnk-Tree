@@ -34,71 +34,71 @@
                         </div>
 
                         <?php
-// Include the database configuration and other necessary files
-include('../config.php');
+                        // Include the database configuration and other necessary files
+                        include('../config.php');
 
-// Initialize variables for error messages
-$firstName = $lastName = $email = '';
-$emailError = '';
-$successMessageProf = '';
+                        // Initialize variables for error messages
+                        $firstName = $lastName = $email = '';
+                        $emailError = '';
+                        $successMessageProf = '';
 
-// Fetch user's email from the session
-if (isset($_SESSION['email'])) {
-    $userEmail = $_SESSION['email'];
+                        // Fetch user's email from the session
+                        if (isset($_SESSION['email'])) {
+                            $userEmail = $_SESSION['email'];
 
-    // Fetch user data based on their email
-    $sql = "SELECT * FROM users WHERE email = '$userEmail'";
-    $result = $conn->query($sql);
+                            // Fetch user data based on their email
+                            $sql = "SELECT * FROM users WHERE email = '$userEmail'";
+                            $result = $conn->query($sql);
 
-    if ($result->num_rows == 1) {
-        $row = $result->fetch_assoc();
-        $firstName = $row['name'];
-        $lastName = $row['surname'];
-        $email = $row['email'];
-    }
-}
+                            if ($result->num_rows == 1) {
+                                $row = $result->fetch_assoc();
+                                $firstName = $row['name'];
+                                $lastName = $row['surname'];
+                                $email = $row['email'];
+                            }
+                        }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get updated user data from the form
-    $newFirstName = $_POST['first_name'];
-    $newLastName = $_POST['last_name'];
-    $newEmail = $_POST['email'];
+                        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                            // Get updated user data from the form
+                            $newFirstName = $_POST['first_name'];
+                            $newLastName = $_POST['last_name'];
+                            $newEmail = $_POST['email'];
 
-    // Check if the new email is the same as the current email or already exists
-    if ($newEmail !== $userEmail) {
-        $checkEmailSql = "SELECT email FROM users WHERE email = '$newEmail'";
-        $checkResult = $conn->query($checkEmailSql);
+                            // Check if the new email is the same as the current email or already exists
+                            if ($newEmail !== $userEmail) {
+                                $checkEmailSql = "SELECT email FROM users WHERE email = '$newEmail'";
+                                $checkResult = $conn->query($checkEmailSql);
 
-        if ($checkResult->num_rows > 0) {
-            $emailError = "A profile with this email already exists.";
-        }
-    }
+                                if ($checkResult->num_rows > 0) {
+                                    $emailError = "A profile with this email already exists.";
+                                }
+                            }
 
-    // If no email error, proceed with the update
-    if (empty($emailError)) {
-        // Update the email in the session if it has changed
-        if ($newEmail !== $userEmail) {
-            $_SESSION['email'] = $newEmail;
-        }
+                            // If no email error, proceed with the update
+                            if (empty($emailError)) {
+                                // Update the email in the session if it has changed
+                                if ($newEmail !== $userEmail) {
+                                    $_SESSION['email'] = $newEmail;
+                                }
 
-        // Update the user's data in the database
-        $updateSql = "UPDATE users SET name = '$newFirstName', surname = '$newLastName', email = '$newEmail' WHERE email = '$userEmail'";
+                                // Update the user's data in the database
+                                $updateSql = "UPDATE users SET name = '$newFirstName', surname = '$newLastName', email = '$newEmail' WHERE email = '$userEmail'";
 
-        if ($conn->query($updateSql) === TRUE) {
-            // Data updated successfully, set a success message
-            $successMessageProf = "Settings saved successfully.";
+                                if ($conn->query($updateSql) === TRUE) {
+                                    // Data updated successfully, set a success message
+                                    $successMessageProf = "Settings saved successfully.";
 
-            // Update the displayed user data with the new values
-            $firstName = $newFirstName;
-            $lastName = $newLastName;
-            $email = $newEmail;
-        } else {
-            // Data update failed, display an error message
-            echo "Error updating data: " . $conn->error;
-        }
-    }
-}
-?>
+                                    // Update the displayed user data with the new values
+                                    $firstName = $newFirstName;
+                                    $lastName = $newLastName;
+                                    $email = $newEmail;
+                                } else {
+                                    // Data update failed, display an error message
+                                    echo "Error updating data: " . $conn->error;
+                                }
+                            }
+                        }
+                        ?>
 
 <!-- Your HTML code for displaying user data and editing form -->
 <div class="card-body">
@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo '<div class="alert alert-danger">' . $emailError . '</div>';
     }
     ?>
-    <form method="POST" action="">
+    <form name="formUser" method="POST" action="">
         <div class="row">
             <div class="col">
                 <div class="mb-3"><label class="form-label" for="first_name"><strong>First Name</strong></label><input class="form-control" type="text" id="first_name" placeholder="John" name="first_name" value="<?php echo $firstName; ?>"></div>
@@ -145,48 +145,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         // Initialize variables for error messages
                         $emailError = $currentPasswordError = $newPasswordError = $confirmPasswordError = "";
 
-                        $userEmail = $_SESSION['email'];    
+                        $userEmail = $_SESSION['email'];
 
                         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                            // Get user input from the form
-                            $email = $_SESSION['email'];
-                            $currentPassword = $_POST['current-password'];
-                            $newPassword = $_POST['new-password'];
-                            $confirmPassword = $_POST['confirm-password'];
+                            // Check if the submitted form is named "formPass"
+                            if (isset($_POST['formPass'])) {
+                                // Get user input from the form
+                                $email = $_SESSION['email'];
+                                $currentPassword = $_POST['current-password'];
+                                $newPassword = $_POST['new-password'];
+                                $confirmPassword = $_POST['confirm-password'];
 
-                            // Create a SQL query to retrieve the hashed password for the provided email
-                            $sql = "SELECT password FROM users WHERE email = '$email'";
-                            $result = $conn->query($sql);
+                                // Create a SQL query to retrieve the hashed password for the provided email
+                                $sql = "SELECT password FROM users WHERE email = '$email'";
+                                $result = $conn->query($sql);
 
-                            if ($result->num_rows > 0) {
-                                // User with the provided email found, retrieve the hashed password
-                                $row = $result->fetch_assoc();
-                                $storedHashedPassword = $row['password'];
+                                if ($result->num_rows > 0) {
+                                    // User with the provided email found, retrieve the hashed password
+                                    $row = $result->fetch_assoc();
+                                    $storedHashedPassword = $row['password'];
 
-                                // Verify the current password
-                                if (!password_verify($currentPassword, $storedHashedPassword)) {
-                                    $currentPasswordError = "Incorrect current password.";
-                                }
+                                    // Verify the current password
+                                    if (!password_verify($currentPassword, $storedHashedPassword)) {
+                                        $currentPasswordError = "Incorrect current password.";
+                                    }
 
-                                // Check if the new password matches the confirm password
-                                if ($newPassword !== $confirmPassword) {
-                                    $newPasswordError = "New password and confirm password do not match.";
-                                }
+                                    // Check if the new password matches the confirm password
+                                    if ($newPassword !== $confirmPassword) {
+                                        $newPasswordError = "New password and confirm password do not match.";
+                                    }
 
-                                // If no errors, update the password
-                                if (empty($currentPasswordError) && empty($newPasswordError)) {
-                                    // Hash the new password
-                                    $hashedNewPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+                                    // If no errors, update the password
+                                    if (empty($currentPasswordError) && empty($newPasswordError)) {
+                                        // Hash the new password
+                                        $hashedNewPassword = password_hash($newPassword, PASSWORD_DEFAULT);
 
-                                    // Update the user's password in the database based on their email
-                                    $updateSql = "UPDATE users SET password = '$hashedNewPassword' WHERE email = '$email'";
+                                        // Update the user's password in the database based on their email
+                                        $updateSql = "UPDATE users SET password = '$hashedNewPassword' WHERE email = '$email'";
 
-                                    if ($conn->query($updateSql) === TRUE) {
-                                        // Password updated successfully, you can redirect or display a success message
-                                        $successMessagePass = "Password updated successfully."; // Updated variable name
-                                    } else {
-                                        // Password update failed, display an error message
-                                        echo "Error updating password: " . $conn->error;
+                                        if ($conn->query($updateSql) === TRUE) {
+                                            // Password updated successfully, you can redirect or display a success message
+                                            $successMessagePass = "Password updated successfully."; // Updated variable name
+                                        } else {
+                                            // Password update failed, display an error message
+                                            echo "Error updating password: " . $conn->error;
+                                        }
                                     }
                                 }
                             }
@@ -197,8 +200,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         ?>
 
 
+
                         <div class="card-body">
-                            <form method="POST" action="">
+                            <form name="formPass" method="POST" action="">
                             <div class="mb-3">
                                 <div id="success-message">
                                 <?php
