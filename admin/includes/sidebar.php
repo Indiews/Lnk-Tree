@@ -1,7 +1,7 @@
 <div id="wrapper">
         <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0 navbar-dark" style="background: var(--bs-emphasis-color);">
             <div class="container-fluid d-flex flex-column p-0"><a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="../">
-                    <div class="sidebar-brand-text mx-3"><span>Lnk Tree</span></div>
+                    <div class="sidebar-brand-text mx-3"><span><img src="https://i.imgur.com/ho5nlNY.png" style="width: 40px;"></img> Lnk Tree</span></div>
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="navbar-nav text-light" id="accordionSidebar">
