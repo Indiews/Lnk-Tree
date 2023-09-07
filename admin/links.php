@@ -41,7 +41,6 @@
                                     <thead>
                                         <tr>
                                             <th>Name</th>
-                                            <th>Username</th>
                                             <th>Email</th>
                                             <th>Permission</th>
                                             <th>DELETE?</th>
@@ -50,7 +49,6 @@
                                     <tbody>
                                         <tr>
                                             <td>Francisco Oliveira</td>
-                                            <td>francisco.oliveira</td>
                                             <td>francisco.oliveira@indiews.com</td>
                                             <td>Administrator</td>
                                             <td style="color: #e8112d;">Remove</td>
@@ -65,11 +63,10 @@
                     </div>
                 </div>
             </div>
-            <footer class="bg-white sticky-footer">
-                <div class="container my-auto">
-                    <div class="text-center my-auto copyright"><span>Copyright © Indiews - Digital Agency</span></div>
-                </div>
-            </footer>
+            <?php
+            // Add footer
+            include('includes/footer.php');
+            ?>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>

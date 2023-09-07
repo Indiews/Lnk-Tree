@@ -35,21 +35,21 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
-                                <table class="table my-0" id="dataTable">
+                            <table class="table my-0" id="dataTable">
                                     <thead>
                                         <tr>
                                             <th>Name</th>
-                                            <th>Username</th>
                                             <th>Email</th>
                                             <th>Permission</th>
+                                            <th>DELETE?</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <td>Francisco Oliveira</td>
-                                            <td>francisco.oliveira</td>
                                             <td>francisco.oliveira@indiews.com</td>
                                             <td>Administrator</td>
+                                            <td style="color: #e8112d;">Remove</td>
                                         </tr>
                                     </tbody>
                                     <tfoot>
@@ -61,11 +61,10 @@
                     </div>
                 </div>
             </div>
-            <footer class="bg-white sticky-footer">
-                <div class="container my-auto">
-                    <div class="text-center my-auto copyright"><span>Copyright © Indiews - Digital Agency</span></div>
-                </div>
-            </footer>
+            <?php
+            // Add footer
+            include('includes/footer.php');
+            ?>
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
