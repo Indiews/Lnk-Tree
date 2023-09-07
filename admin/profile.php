@@ -100,7 +100,7 @@
                         }
                         ?>
 
-<!-- Your HTML code for displaying user data and editing form -->
+
 <div class="card-body">
     <?php
     // Display a success message if settings are saved successfully

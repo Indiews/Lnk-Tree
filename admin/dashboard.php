@@ -65,10 +65,10 @@
                                 <div class="card-body">
                                     <div class="row align-items-center no-gutters">
                                         <div class="col me-2">
-                                            <div class="text-uppercase text-warning fw-bold text-xs mb-1"><span style="color: var(--bs-emphasis-color);">License status</span></div>
-                                            <div class="text-dark fw-bold h5 mb-0"><span>SYS OFF</span></div>
+                                            <div class="text-uppercase text-warning fw-bold text-xs mb-1"><span style="color: var(--bs-emphasis-color);">Lnk Tree Version</span></div>
+                                            <div class="text-dark fw-bold h5 mb-0"><span>V 0.1.0</span></div>
                                         </div>
-                                        <div class="col-auto"><i class="fa fa-drivers-license fa-2x text-gray-300"></i></div>
+                                        <div class="col-auto"><i class="fa fa-file-code-o fa-2x text-gray-300"></i></div>
                                     </div>
                                 </div>
                             </div>
@@ -84,7 +84,7 @@
                                     <form>
                                         <div class="row">
                                             <div class="col">
-                                                <div class="mb-3"><label class="form-label" for=""><strong>Background Color</strong></label><input class="form-control form-control-color" type="color" id="background"></div>
+                                                <div class="mb-3"><label class="form-label" for=""><strong>Background Color</strong></label><input class="form-control form-control-color" type="color" value="" id="background"></div>
                                             </div>
                                             <div class="col">
                                                 <div class="mb-3"><label class="form-label" for=""><strong>Button Background Color</strong></label><input class="form-control form-control-color" type="color" id="button-back"></div>
