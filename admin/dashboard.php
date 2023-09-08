@@ -81,30 +81,102 @@
                                     <p class="text-primary m-0 fw-bold">Website Settings</p>
                                 </div>
                                 <div class="card-body">
-                                    <form>
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="mb-3"><label class="form-label" for=""><strong>Background Color</strong></label><input class="form-control form-control-color" type="color" value="" id="background"></div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="mb-3"><label class="form-label" for=""><strong>Button Background Color</strong></label><input class="form-control form-control-color" type="color" id="button-back"></div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="mb-3"><label class="form-label" for=""><strong>Button Border Color</strong></label><input class="form-control form-control-color" type="color" id="button-border"></div>
-                                            </div>
+
+                                <?php
+                                // Include the database configuration and other necessary files
+                                include('../config.php');
+
+                                // Initialize variables for error messages
+                                $webname = $description = $logo = $background = $buttonBack = $buttonBorder = '';
+                                $successMessage = '';
+
+                                // Fetch user's website data from the session or use a website ID if applicable
+                                // Replace '$_SESSION['website_id']' with the actual way you identify the website
+                                $websiteId = isset($_SESSION['website_id']) ? $_SESSION['website_id'] : 1;
+
+                                // Fetch current website settings from the database based on the website ID
+                                $sql = "SELECT * FROM website WHERE id = $websiteId";
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows == 1) {
+                                    $row = $result->fetch_assoc();
+                                    $webname = $row['webname'];
+                                    $description = $row['description'];
+                                    //$logo = $row['logo'];
+                                    $background = $row['bkcolor'];
+                                    $buttonBack = $row['btbkcolor'];
+                                    $buttonBorder = $row['btbocolor'];
+                                }
+
+                                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                                    // Get updated values from the form
+                                    $newWebname = $_POST['webname'];
+                                    $newDescription = $_POST['description'];
+                                    $newBackground = $_POST['background'];
+                                    $newButtonBack = $_POST['button_back'];
+                                    $newButtonBorder = $_POST['button_border'];
+
+                                    // Update the website settings in the database with ID 1 (or any other ID as needed)
+                                    $updateSql = "UPDATE website SET 
+                                        webname = '$newWebname',
+                                        description = '$newDescription',
+                                        bkcolor = '$newBackground',
+                                        btbkcolor = '$newButtonBack',
+                                        btbocolor = '$newButtonBorder'
+                                        WHERE id = 1"; // Update row with ID 1
+
+                                    if ($conn->query($updateSql) === TRUE) {
+                                        // Data updated successfully, set a success message
+                                        $successMessage = "Settings saved successfully.";
+
+                                        // Update the displayed values with the new ones
+                                        $webname = $newWebname;
+                                        $description = $newDescription;
+                                        $background = $newBackground;
+                                        $buttonBack = $newButtonBack;
+                                        $buttonBorder = $newButtonBorder;
+                                    } else {
+                                        // Data update failed, display an error message
+                                        echo "Error updating data: " . $conn->error;
+                                    }
+                                }
+                                ?>
+
+
+                            <div class="card-body">
+                                <?php
+                                // Display a success message if settings are saved successfully
+                                if (!empty($successMessage)) {
+                                    echo '<div class="alert alert-success">' . $successMessage . '</div>';
+                                }
+                                ?>
+                                <form method="POST" action="">
+                                    <div class="row">
+                                        <!-- Input fields for background, button background, and button border colors -->
+                                        <!-- Add 'value' attributes to populate with current values -->
+                                        <div class="col">
+                                            <div class="mb-3"><label class="form-label" for="background"><strong>Background Color</strong></label><input class="form-control form-control-color" type="color" id="background" name="background" value="<?php echo $background; ?>"></div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="mb-3"><label class="form-label" for="webname"><strong>Website Name</strong></label><input class="form-control" type="text" id="name" placeholder="My Brand" name="first_name"></div>
-                                            </div>
+                                        <div class="col">
+                                            <div class="mb-3"><label class="form-label" for="button_back"><strong>Button Background Color</strong></label><input class="form-control form-control-color" type="color" id="button_back" name="button_back" value="<?php echo $buttonBack; ?>"></div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="mb-3"><label class="form-label" for="description"><strong>Description</strong></label><input class="form-control" type="text" id="description" placeholder="i'm an awesome website" name="last_name"></div>
-                                            </div>
+                                        <div class="col">
+                                            <div class="mb-3"><label class="form-label" for="button_border"><strong>Button Border Color</strong></label><input class="form-control form-control-color" type="color" id="button_border" name="button_border" value="<?php echo $buttonBorder; ?>"></div>
                                         </div>
-                                        <div class="mb-3"><button class="btn btn-primary btn-sm" type="submit">Save Settings</button></div>
-                                    </form>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="mb-3"><label class="form-label" for="webname"><strong>Website Name</strong></label><input class="form-control" type="text" id="webname" name="webname" placeholder="My Brand" value="<?php echo $webname; ?>"></div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="mb-3"><label class="form-label" for="description"><strong>Description</strong></label><input class="form-control" type="text" id="description" name="description" placeholder="I'm an awesome website" value="<?php echo $description; ?>"></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3"><button class="btn btn-primary btn-sm" type="submit">Save Settings</button></div>
+                                </form>
+                            </div>
                                 </div>
                             </div>
                         </div>
