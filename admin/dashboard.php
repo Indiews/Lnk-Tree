@@ -18,10 +18,7 @@ $webname = $websiteSettings['webname'];
 $description = $websiteSettings['description'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Handle form submissions and updates to the database
-    // ...
-
-    // Example update for background color
+    
     $background = $_POST['background'];
     $buttonBackgroundColor = $_POST['button_back'];
     $buttonBorderColor = $_POST['button_border'];

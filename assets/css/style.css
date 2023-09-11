@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 body{
-    background-color: var(--bgColor);
+    background-color: var(--bkColor);
 }
 
 #userPhoto{
@@ -14,7 +14,7 @@ body{
 }
 
 #userName{
-    color: var(--accentColor);
+    color: var(--btbkcolor);
     font-size: 1rem;
     font-weight: 600;
     line-height: 1.25;
@@ -33,8 +33,8 @@ body{
 }
 .link{
     display: block;
-    background-color: var(--accentColor);
-    color: var(--bgColor);
+    background-color: var(--btbkcolor);
+    color: var(--bkColor);
     font-family: var(--font);
     text-align: center;
     margin-bottom: 20px;
@@ -42,10 +42,11 @@ body{
     text-decoration: none;
     font-size: 1rem;
     transition: all .25s cubic-bezier(.08,.59,.29,.99);
-    border: solid var(--accentColor) 2px;
+    border: solid var(--borderColor) 2px;
+    border-radius: 20px; 
 }
 
 .link:hover{
-    background-color: var(--bgColor);
-    color: var(--accentColor);
+    background-color: var(--bkColor);
+    color: var(--borderColor);
 }

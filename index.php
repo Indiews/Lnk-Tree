@@ -81,27 +81,51 @@
     ?>">
     
     <meta name="twitter:title" content="<?php
-    // Create a SQL query to retrieve the webname, lang, and description
     $sql = "SELECT `webname` FROM `website`";
-    // Execute the query
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        // Data found, loop through the results
         while ($row = $result->fetch_assoc()) {
-            $webname = $row["webname"];
-            
-            // Display the data for each row
-            echo "$webname";
+            echo $row["webname"];
         }
     }
-    ?>">
+?>
+">
     <link rel="stylesheet" href="assets/css/style.css"> 
     <style>
     
     :root {
-    --bgColor: #3e3751;
-    --accentColor: #ffffff; 
+    --bkColor: <?php
+    $sql = "SELECT `bkcolor` FROM `website`";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo $row["bkcolor"];
+        }
+    }
+?>
+;
+    --btbkcolor: <?php
+    $sql = "SELECT `btbkcolor` FROM `website`";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo $row["btbkcolor"];
+        }
+    }
+?>;
+    --borderColor: <?php
+    $sql = "SELECT `btbocolor` FROM `website`";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo $row["btbocolor"];
+        }
+    }
+?>;
     --font: 'Poppins', sans-serif;;
     }
     </style>
