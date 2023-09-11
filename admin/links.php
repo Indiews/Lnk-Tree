@@ -9,9 +9,12 @@
         $searchLinksSql = "SELECT * FROM links ORDER BY id ASC";
         $resultSearchLinks = $conn->query($searchLinksSql);
 
-        if(isset($_POST['SubmitButton'])){
-            $input = $_POST['inputText'];
-            $message = "Success! You entered: ".$input;
+        if(isset($_GET['remove'])) {
+            $id = $_GET['id'];
+            $sql = "DELETE FROM links WHERE id=$id LIMIT 1";
+            mysqli_query($conn, $sql) or die ($sql);
+            $path = "?removed";
+            header("Location:$path");
         }
 ?>
 
@@ -71,7 +74,7 @@
                                                     <td><?php echo $rowSearchLinks['name']; ?></td>
                                                     <td><?php echo $rowSearchLinks['link']; ?></td>
                                                     <td><?php echo $rowSearchLinks['order']; ?></td>
-                                                    <td style="color: #e8112d;">Remove</td>
+                                                    <td style="color: #e8112d;"><a href="?remove&id=<?php echo $rowSearchLinks['id'];?>">Remove</a></td>
                                                 </tr>
                                                 <?php
                                             }
