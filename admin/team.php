@@ -1,6 +1,30 @@
 <?php
         // Check if login is made
         include('includes/check-login.php');
+        
+        include('../config.php');
+        
+
+        $sql="SELECT * FROM users";
+        $queryCat=mysqli_query($conn, $sql) or die ($sql);
+
+
+        $sql="SELECT * FROM users";
+        $queryUsers=mysqli_query($conn, $sql) or die ($sql);
+        $total=mysqli_num_rows($queryUsers);
+        if($total>0){
+        $fetch=mysqli_fetch_assoc($queryUsers);
+        }
+
+        if(isset($_GET['remove'])){
+            $id=$_GET['id'];
+            $table="users";
+            $sql="DELETE FROM $table WHERE id=$id LIMIT 1";
+            mysqli_query($conn, $sql)  or die ($sql);
+            $path="?removed";
+            header("Location:$path");
+    
+}
 ?>
 
 <!DOCTYPE html>
@@ -44,14 +68,17 @@
                                             <th>DELETE?</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody> 
+                                    <?php $i=0; do { $i++;?>
                                         <tr>
-                                            <td>Francisco Oliveira</td>
-                                            <td>francisco.oliveira@indiews.com</td>
-                                            <td>Administrator</td>
-                                            <td style="color: #e8112d;">Remove</td>
+                                            <td><?php echo $fetch['name'];?> <?php echo $fetch['surname'];?></td>
+                                            <td><?php echo $fetch['email'];?></td>
+                                            <td><?php echo $fetch['permission'];?></td>
+                                            <td><a style='color:Red' href="?remove&id=<?php echo $fetch['id'];?>">Remove</a></td>
                                         </tr>
+                                        <?php } while($fetch=mysqli_fetch_assoc($queryUsers));?>
                                     </tbody>
+                                        
                                     <tfoot>
                                         <tr></tr>
                                     </tfoot>
