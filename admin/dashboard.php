@@ -10,7 +10,7 @@ $sql = "SELECT * FROM website WHERE id = 1";
 $result = $conn->query($sql);
 $websiteSettings = $result->fetch_assoc();
 
-// Initialize variables for form values
+// Initialize variables for form values with existing values
 $background = $websiteSettings['bkcolor'];
 $buttonBackgroundColor = $websiteSettings['btbkcolor'];
 $buttonBorderColor = $websiteSettings['btbocolor'];
@@ -19,11 +19,12 @@ $description = $websiteSettings['description'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
-    $background = $_POST['background'];
-    $buttonBackgroundColor = $_POST['button_back'];
-    $buttonBorderColor = $_POST['button_border'];
-    $webname = $_POST['webname'];
-    $description = $_POST['description'];
+    // Check if input is provided, if not, keep the existing values
+    $background = isset($_POST['background']) ? $_POST['background'] : $background;
+    $buttonBackgroundColor = isset($_POST['button_back']) ? $_POST['button_back'] : $buttonBackgroundColor;
+    $buttonBorderColor = isset($_POST['button_border']) ? $_POST['button_border'] : $buttonBorderColor;
+    $webname = isset($_POST['webname']) ? $_POST['webname'] : $webname;
+    $description = isset($_POST['description']) ? $_POST['description'] : $description;
 
     // Update settings in the database
     $updateSql = "UPDATE website SET bkcolor = '$background', btbkcolor = '$buttonBackgroundColor', btbocolor = '$buttonBorderColor', webname = '$webname', description = '$description' WHERE id = 1";
@@ -98,26 +99,11 @@ $conn->close();
                             <div class="card-body">
                                 <form method="POST" action="" enctype="multipart/form-data">
                                     <div class="row">
-                                        <div class="col">
-                                            <div class="mb-3"><label class="form-label" for="background"><strong>Background Color</strong></label><input class="form-control form-control-color" type="color" id="background" name="background"></div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="mb-3"><label class="form-label" for="button-back"><strong>Button Background Color</strong></label><input class="form-control form-control-color" type="color" id="button-back" name="button_back"></div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="mb-3"><label class="form-label" for="button-border"><strong>Button Border Color</strong></label><input class="form-control form-control-color" type="color" id="button-border" name="button_border"></div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="mb-3"><label class="form-label" for="webname"><strong>Website Name</strong></label><input class="form-control" type="text" id="webname" placeholder="My Brand" name="webname"></div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="mb-3"><label class="form-label" for="description"><strong>Description</strong></label><input class="form-control" type="text" id="description" placeholder="I'm an awesome website" name="description"></div>
-                                        </div>
-                                    </div>
+                                    <div class="mb-3"><label class="form-label" for="background"><strong>Background Color</strong></label><input class="form-control form-control-color" type="color" id="background" name="background" value="<?php echo $background; ?>"></div>
+                                    <div class="mb-3"><label class="form-label" for="button-back"><strong>Button Background Color</strong></label><input class="form-control form-control-color" type="color" id="button-back" name="button_back" value="<?php echo $buttonBackgroundColor; ?>"></div>
+                                    <div class="mb-3"><label class="form-label" for="button-border"><strong>Button Border Color</strong></label><input class="form-control form-control-color" type="color" id="button-border" name="button_border" value="<?php echo $buttonBorderColor; ?>"></div>
+                                    <div class="mb-3"><label class="form-label" for="webname"><strong>Website Name</strong></label><input class="form-control" type="text" id="webname" placeholder="My Brand" name="webname" value="<?php echo $webname; ?>"></div>
+                                    <div class="mb-3"><label class="form-label" for="description"><strong>Description</strong></label><input class="form-control" type="text" id="description" placeholder="I'm an awesome website" name="description" value="<?php echo $description; ?>"></div>
                                     <div class="row">
                                         <div class="col">
                                             <div class="mb-3"><label class="form-label" for="logo"><strong>Upload Logo</strong></label><input class="form-control" type="file" id="logo" name="logo"></div>
