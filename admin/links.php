@@ -2,6 +2,9 @@
 <?php
         // Check if login is made
         include('includes/check-login.php');
+
+        // Include the database configuration
+        include('../config.php');
 ?>
 
 <!DOCTYPE html>
@@ -40,17 +43,17 @@
                                 <table class="table my-0" id="dataTable">
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Permission</th>
+                                            <th>Display Name</th>
+                                            <th>URL</th>
+                                            <th>Position</th>
                                             <th>DELETE?</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <td>Francisco Oliveira</td>
-                                            <td>francisco.oliveira@indiews.com</td>
-                                            <td>Administrator</td>
+                                            <td>https://lnk-tree.com</td>
+                                            <td>1</td>
                                             <td style="color: #e8112d;">Remove</td>
                                         </tr>
                                     </tbody>
@@ -58,6 +61,39 @@
                                         <tr></tr>
                                     </tfoot>
                                 </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <h3 class="text-dark mb-4"></h3>
+                    <div class="col">
+                        <div class="card shadow mb-3">
+                            <div class="card-header py-3">
+                                <p class="text-primary m-0 fw-bold">Add Link</p>
+                            </div>
+                            <div class="card-body">
+                            <?php
+                            if (!empty($successMessage)) {
+                                echo '<div class="alert alert-success">' . $successMessage . '</div>';
+                            }
+                            if (!empty($errorMessage)) {
+                                echo '<div class="alert alert-danger">' . $errorMessage . '</div>';
+                            }
+                            ?>
+                                <form>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="mb-3"><label class="form-label" for="displayName"><strong>Display Name</strong></label><input class="form-control" type="text" id="displayName" placeholder="Website" name="Display"></div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="mb-3"><label class="form-label" for="url"><strong>URL</strong></label><input class="form-control" type="text" id="url" placeholder="https://lnk-tree.com" name="url"></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3"><button class="btn btn-primary btn-sm" type="submit">Save Settings</button></div>
+                                </form>
                             </div>
                         </div>
                     </div>
