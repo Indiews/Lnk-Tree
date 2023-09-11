@@ -1,9 +1,9 @@
 <?php
 // Database configuration
-$db_host = "localhost";
-$db_user = "itsfdo_its";
-$db_password = "qyvJgtfOBO";
-$db_name = "itsfdo_its";
+$db_host = "37.187.145.226";
+$db_user = "admin_demo_lnk";
+$db_password = "L4T4imipbE";
+$db_name = "admin_demo_lnk";
 
 // Email server configuration
 $email_host = "smtp.example.com"; // Your SMTP server hostname

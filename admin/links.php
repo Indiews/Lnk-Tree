@@ -5,6 +5,14 @@
 
         // Include the database configuration
         include('../config.php');
+
+        $searchLinksSql = "SELECT * FROM links ORDER BY id ASC";
+        $resultSearchLinks = $conn->query($searchLinksSql);
+
+        if(isset($_POST['SubmitButton'])){
+            $input = $_POST['inputText'];
+            $message = "Success! You entered: ".$input;
+        }
 ?>
 
 <!DOCTYPE html>
@@ -39,6 +47,9 @@
                             <p class="text-primary m-0 fw-bold">Team Info</p>
                         </div>
                         <div class="card-body">
+                            <?php
+                                if (mysqli_num_rows($resultSearchLinks) > 0) {
+                            ?>
                             <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
                                 <table class="table my-0" id="dataTable">
                                     <thead>
@@ -50,18 +61,32 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>Francisco Oliveira</td>
-                                            <td>https://lnk-tree.com</td>
-                                            <td>1</td>
-                                            <td style="color: #e8112d;">Remove</td>
-                                        </tr>
+                                        <form method="POST" action="">
+
+                                        </form>
+                                        <?php
+                                            while ($rowSearchLinks = mysqli_fetch_assoc($resultSearchLinks)) {
+                                                ?>
+                                                <tr>
+                                                    <td><?php echo $rowSearchLinks['name']; ?></td>
+                                                    <td><?php echo $rowSearchLinks['link']; ?></td>
+                                                    <td><?php echo $rowSearchLinks['order']; ?></td>
+                                                    <td style="color: #e8112d;">Remove</td>
+                                                </tr>
+                                                <?php
+                                            }
+                                        ?>
                                     </tbody>
                                     <tfoot>
                                         <tr></tr>
                                     </tfoot>
                                 </table>
                             </div>
+                            <?php
+                                } else {
+                                    echo 'Não foram encontrados resultados.';
+                                }
+                            ?>
                         </div>
                     </div>
                 </div>
