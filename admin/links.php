@@ -16,6 +16,16 @@
             $path = "?removed";
             header("Location:$path");
         }
+
+        if(isset($_GET['changePos'])) {
+            $id = $_POST['id'];
+            echo $id;
+            $orderNum = $_POST['orderNum' . $id];
+            $sql = "UPDATE links SET `order` = $orderNum WHERE id = $id";
+            mysqli_query($conn, $sql) or die ($sql);
+            $path = "?changePos";
+            header("Location:$path");
+        }
 ?>
 
 <!DOCTYPE html>
@@ -73,7 +83,13 @@
                                                 <tr>
                                                     <td><?php echo $rowSearchLinks['name']; ?></td>
                                                     <td><?php echo $rowSearchLinks['link']; ?></td>
-                                                    <td><?php echo $rowSearchLinks['order']; ?></td>
+                                                    <td>
+                                                        <form method="POST" action="/admin/controllers/changePosNumberController.php">
+                                                            <input type="hidden" name="id" value="<?php echo $rowSearchLinks['id'];?>" />
+                                                            <input type="number" name="orderNum<?php echo $rowSearchLinks['id'];?>" value="<?php echo $rowSearchLinks['order']; ?>" required />
+                                                            <button class="btn btn-primary btn-sm" type="submit" name="submit">Change</button>
+                                                        </form>
+                                                    </td>
                                                     <td style="color: #e8112d;"><a href="?remove&id=<?php echo $rowSearchLinks['id'];?>">Remove</a></td>
                                                 </tr>
                                                 <?php
