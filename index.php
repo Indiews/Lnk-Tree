@@ -168,16 +168,20 @@
     
     <!-- Link Buttons -->
     <div id="links">
-        <a class="link" href="https://ptanime.com" target="_blank">Website</a>
-        <a class="link" href="https://discord.gg/xnGQFgg2YR" target="_blank">Discord</a>
-        <a class="link" href="https://bit.ly/39YtqKF" target="_blank">Twitch</a>
-        <a class="link" href="https://www.instagram.com/ptanime/" target="_blank">Instagram</a>
-        <a class="link" href="http://bit.ly/34ZLHUD" target="_blank">Youtube</a>
-        <a class="link" href="https://twitter.com/ptAnime_oficial" target="_blank">Twitter</a>
-        <a class="link" href="https://ptani.me/r/ptanimemeshi" target="_blank">ptanimemeshi na Prozis</a>
-        <a class="link" href="https://www.pamp.pt/" target="_blank">PAMP</a>
-        
-      
+        <?php
+        // Create a SQL query to retrieve the webname, lang, and description
+        $sql = "SELECT * FROM `links` ORDER BY 'order' ASC";
+        // Execute the query
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            // Data found, loop through the results
+            while ($row = $result->fetch_assoc()) {
+                // Display the data for each row
+                echo "<a class='link' href='" . $row['link'] . "' target='_blank'>" . $row['name'] . "</a>";
+            }
+        }
+        ?>
     </div>
 
     
