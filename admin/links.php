@@ -103,7 +103,7 @@
                             </div>
                             <?php
                                 } else {
-                                    echo 'Não foram encontrados resultados.';
+                                    echo 'No results were found.';
                                 }
                             ?>
                         </div>
@@ -117,27 +117,25 @@
                                 <p class="text-primary m-0 fw-bold">Add Link</p>
                             </div>
                             <div class="card-body">
-                            <?php
-                            if (!empty($successMessage)) {
-                                echo '<div class="alert alert-success">' . $successMessage . '</div>';
-                            }
-                            if (!empty($errorMessage)) {
-                                echo '<div class="alert alert-danger">' . $errorMessage . '</div>';
-                            }
-                            ?>
-                                <form>
+                                                      
+                                
+
+                             
+                                <form method="POST">
+                                    
                                     <div class="row">
                                         <div class="col">
-                                            <div class="mb-3"><label class="form-label" for="displayName"><strong>Display Name</strong></label><input class="form-control" type="text" id="displayName" placeholder="Website" name="Display"></div>
+                                            <div class="mb-3"><label class="form-label" for="DisplayName"><strong>Display Name</strong></label><input class="form-control" type="text" id="DisplayName" placeholder="Website" name="displayName" required></div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col">
-                                            <div class="mb-3"><label class="form-label" for="url"><strong>URL</strong></label><input class="form-control" type="text" id="url" placeholder="https://lnk-tree.com" name="url"></div>
+                                            <div class="mb-3"><label class="form-label" for="link"><strong>link</strong></label><input class="form-control" type="text" id="link" placeholder="https://lnk-tree.com" name="link" required></div>
                                         </div>
                                     </div>
-                                    <div class="mb-3"><button class="btn btn-primary btn-sm" type="submit">Save Settings</button></div>
+                                    <div class="mb-3"><button class="btn btn-primary btn-sm" type="submit">Save Link</button></div>
                                 </form>
+                                
                             </div>
                         </div>
                     </div>
