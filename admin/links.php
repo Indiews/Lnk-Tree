@@ -6,7 +6,7 @@
         // Include the database configuration
         include('../config.php');
 
-        $searchLinksSql = "SELECT * FROM links ORDER BY id ASC";
+        $searchLinksSql = "SELECT * FROM links ORDER BY `order` ASC";
         $resultSearchLinks = $conn->query($searchLinksSql);
 
         if(isset($_GET['remove'])) {
@@ -14,16 +14,6 @@
             $sql = "DELETE FROM links WHERE id=$id LIMIT 1";
             mysqli_query($conn, $sql) or die ($sql);
             $path = "?removed";
-            header("Location:$path");
-        }
-
-        if(isset($_GET['changePos'])) {
-            $id = $_POST['id'];
-            echo $id;
-            $orderNum = $_POST['orderNum' . $id];
-            $sql = "UPDATE links SET `order` = $orderNum WHERE id = $id";
-            mysqli_query($conn, $sql) or die ($sql);
-            $path = "?changePos";
             header("Location:$path");
         }
 ?>
@@ -61,6 +51,19 @@
                         </div>
                         <div class="card-body">
                             <?php
+                            // Display a success message if settings are saved successfully
+                            if (isset($_SESSION['successMessage'])) {
+                                echo '<div class="alert alert-success">' . $_SESSION['successMessage'] . '</div>';
+                                unset($_SESSION['successMessage']);
+                            }
+
+                            // Display an email error message if one exists
+                            if (isset($_SESSION['errorMessage'])) {
+                                echo '<div class="alert alert-danger">' . $_SESSION['errorMessage'] . '</div>';
+                                unset($_SESSION['errorMessage']);
+                            }
+                            ?>
+                            <?php
                                 if (mysqli_num_rows($resultSearchLinks) > 0) {
                             ?>
                             <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
@@ -86,7 +89,7 @@
                                                     <td>
                                                         <form method="POST" action="/admin/controllers/changePosNumberController.php">
                                                             <input type="hidden" name="id" value="<?php echo $rowSearchLinks['id'];?>" />
-                                                            <input type="number" name="orderNum<?php echo $rowSearchLinks['id'];?>" value="<?php echo $rowSearchLinks['order']; ?>" required />
+                                                            <input type="number" name="orderNum" value="<?php echo $rowSearchLinks['order']; ?>" required />
                                                             <button class="btn btn-primary btn-sm" type="submit" name="submit">Change</button>
                                                         </form>
                                                     </td>
