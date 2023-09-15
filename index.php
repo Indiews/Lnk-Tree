@@ -170,7 +170,7 @@
     <div id="links">
         <?php
         // Create a SQL query to retrieve the webname, lang, and description
-        $sql = "SELECT * FROM `links` ORDER BY 'order' ASC";
+        $sql = "SELECT * FROM `links` ORDER BY `order` ASC";
         // Execute the query
         $result = $conn->query($sql);
 
