@@ -5,7 +5,8 @@ $db_user = "admin_demo_lnk";
 $db_password = "L4T4imipbE";
 $db_name = "admin_demo_lnk";
 
-// Email server configuration
+// Email server configuration for V2
+// No valid use for V1 users
 $email_host = "smtp.example.com"; // Your SMTP server hostname
 $email_port = 587; // Port for SMTP (usually 587 for TLS/STARTTLS)
 $email_username = "your_email@example.com"; // Your email username
