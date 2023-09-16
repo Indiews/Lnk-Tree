@@ -48,7 +48,7 @@
                     <h3 class="text-dark mb-4">Links</h3>
                     <div class="card shadow">
                         <div class="card-header py-3">
-                            <p class="text-primary m-0 fw-bold">Team Info</p>
+                            <p class="text-primary m-0 fw-bold">Links Management</p>
                         </div>
                         <div class="card-body">
                             <?php
