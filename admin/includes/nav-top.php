@@ -29,7 +29,9 @@
                                     ?>
                                 </span></a>
                                     <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
-                                        <div class="dropdown-divider"></div><a class="dropdown-item" href="includes/logout.php"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a>
+                                    <a class="dropdown-item" href="register.php"><i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Register New User</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="includes/logout.php"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a>
                                     </div>
                                 </div>
                             </li>
