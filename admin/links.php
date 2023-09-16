@@ -93,7 +93,7 @@
                                                             <button class="btn btn-primary btn-sm" type="submit" name="submit">Change</button>
                                                         </form>
                                                     </td>
-                                                    <td style="color: #e8112d;"><a href="?remove&id=<?php echo $rowSearchLinks['id'];?>">Remove</a></td>
+                                                    <td><a style='color:Red' href="?remove&id=<?php echo $rowSearchLinks['id'];?>">Remove</a></td>
                                                 </tr>
                                                 <?php
                                             }
