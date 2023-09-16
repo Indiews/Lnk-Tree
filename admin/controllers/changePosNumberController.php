@@ -16,7 +16,7 @@ if(isset($_POST['submit'])) {
         mysqli_query($conn, $sql) or die ($sql);
         $_SESSION['successMessage'] = 'Order successfully changed.';
     } else {
-        $_SESSION['errorMessage'] = 'You already has that order number.';
+        $_SESSION['errorMessage'] = 'You already have a link in that position.';
     }
 
     header("Location: /admin/links.php");
