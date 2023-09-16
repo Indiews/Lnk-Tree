@@ -127,13 +127,18 @@
                                     $name = $_POST['name'];
                                     $link = $_POST['link'];
 
-                                    
+                                    // Get the maximum 'order' value from the database
+                                    $maxOrderQuery = "SELECT MAX(`order`) FROM links";
+                                    $result = $conn->query($maxOrderQuery);
+                                    $row = $result->fetch_assoc();
+                                    $maxOrder = $row['MAX(`order`)'];
+                                    $newOrder = $maxOrder + 1;
 
-                                    // Insert data into the database
-                                    $sql = "INSERT INTO links (name, link) VALUES (?, ?)";
+                                    // Insert data into the database with the new 'order' value
+                                    $sql = "INSERT INTO links (name, link, `order`) VALUES (?, ?, ?)";
                                     $stmt = $conn->prepare($sql);
-                                    $stmt->bind_param("ss", $name, $link);
-
+                                    $stmt->bind_param("ssi", $name, $link, $newOrder);
+                                    
                                     if ($stmt->execute()) {
                                         echo "Data inserted successfully!";
                                     } else {
