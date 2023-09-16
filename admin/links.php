@@ -138,11 +138,14 @@
                                     $sql = "INSERT INTO links (name, link, `order`) VALUES (?, ?, ?)";
                                     $stmt = $conn->prepare($sql);
                                     $stmt->bind_param("ssi", $name, $link, $newOrder);
-                                    
+
                                     if ($stmt->execute()) {
-                                        echo "Data inserted successfully!";
+                                        $successMessage = "Link added successfully!";
+
                                     } else {
-                                        echo "Error: " . $stmt->error;
+                                        $errorMessage = "Error: " . $stmt->error;
+
+                                        //echo "Error: " . $stmt->error;
                                     }
 
                                     $stmt->close();
@@ -151,9 +154,18 @@
                                 $conn->close();
                                 ?>
 
-                             
+                                
                                 <form method="POST">
-                                    
+                                <?php
+                                if (!empty($successMessage)) {
+                                echo '<div class="alert alert-success">' . $successMessage . '</div>';
+                                 }
+                                
+                                 if (!empty($errorMessage)) {
+                                    echo '<div class="alert alert-danger">' . $errorMessag . '</div>';
+                                }
+                                 
+                                ?>
                                     <div class="row">
                                         <div class="col">
                                             <div class="mb-3"><label class="form-label" for="name"><strong>Display Name</strong></label><input class="form-control" type="text" id="name" placeholder="Website" name="name" required></div>
