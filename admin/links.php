@@ -121,19 +121,42 @@
                             </div>
                             <div class="card-body">
                                                       
-                                
+                                <?php
+                                // Check if the form is submitted
+                                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                                    $name = $_POST['name'];
+                                    $link = $_POST['link'];
+
+                                    
+
+                                    // Insert data into the database
+                                    $sql = "INSERT INTO links (name, link) VALUES (?, ?)";
+                                    $stmt = $conn->prepare($sql);
+                                    $stmt->bind_param("ss", $name, $link);
+
+                                    if ($stmt->execute()) {
+                                        echo "Data inserted successfully!";
+                                    } else {
+                                        echo "Error: " . $stmt->error;
+                                    }
+
+                                    $stmt->close();
+                                }
+
+                                $conn->close();
+                                ?>
 
                              
                                 <form method="POST">
                                     
                                     <div class="row">
                                         <div class="col">
-                                            <div class="mb-3"><label class="form-label" for="DisplayName"><strong>Display Name</strong></label><input class="form-control" type="text" id="DisplayName" placeholder="Website" name="displayName" required></div>
+                                            <div class="mb-3"><label class="form-label" for="name"><strong>Display Name</strong></label><input class="form-control" type="text" id="name" placeholder="Website" name="name" required></div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col">
-                                            <div class="mb-3"><label class="form-label" for="link"><strong>link</strong></label><input class="form-control" type="text" id="link" placeholder="https://lnk-tree.com" name="link" required></div>
+                                            <div class="mb-3"><label class="form-label" for="link"><strong>Link</strong></label><input class="form-control" type="text" id="link" placeholder="https://lnk-tree.com" name="link" required></div>
                                         </div>
                                     </div>
                                     <div class="mb-3"><button class="btn btn-primary btn-sm" type="submit">Save Link</button></div>
