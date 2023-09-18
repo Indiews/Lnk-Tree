@@ -23,7 +23,6 @@
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="refresh" content="15">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Links - Lnk Tree</title>
     <link rel="stylesheet" href="../admin/assets/bootstrap/css/bootstrap.min.css">
@@ -142,7 +141,7 @@
 
                                     if ($stmt->execute()) {
                                         $successMessage = "Link added successfully!";
-
+                                        echo '<meta http-equiv="refresh" content="2;url=links.php">';
                                     } else {
                                         $errorMessage = "Error: " . $stmt->error;
 
