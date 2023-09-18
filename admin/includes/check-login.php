@@ -1,37 +1,46 @@
 <?php
 session_start();
 
-// Check if the user is not logged in
-/*if (!isset($_SESSION['email'])) {
-    // Redirect to the login page
-    header("Location: login.php"); // Change to the actual login page URL
-    exit(); // Ensure that the script stops executing
-}*/
-
 // Include the database configuration
 include('../config.php');
 
-
+// Check if the user is not logged in
 if (!isset($_SESSION['email'])) {
+    // Clear the session cookie
+    session_unset();
+    session_destroy();
+
     // Redirect to the login page
-    header("Location: login.php");}
-else {
+    header("Location: login.php");
+    exit(); // Ensure that the script stops executing
+}
+
 // Get the email from the session
 $email = $_SESSION['email'];
 
-// Query the database to check if the email exists
- $query = "SELECT * FROM users WHERE email = '$email'";
-$result = $conn->query($query);
+// Query the database to check if the email exists (use prepared statements for security)
+$query = "SELECT * FROM users WHERE email = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
 
 // Check if the email exists in the database
 if ($result->num_rows === 0) {
-    // Email not found in the database, redirect to the login page
-    header("Location: login.php"); 
-   
-}
+    // Clear the session cookie
+    session_unset();
+    session_destroy();
 
+    // Email not found in the database, redirect to the login page
+    header("Location: login.php");
+    exit();
 }
-exit();
 
 // If the user is logged in and the email exists in the database, you can proceed with displaying the protected content.
+
+// ... Your protected content code goes here ...
+
+// Close the database connection (optional but good practice)
+$stmt->close();
+$conn->close();
 ?>
