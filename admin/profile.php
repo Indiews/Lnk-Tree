@@ -33,14 +33,14 @@
                     </div>
                     <div class="card-body">
                         <?php
-                        // Display a success message if settings are saved successfully
-                        if (!empty($successMessageProf)) {
-                            echo '<div class="alert alert-success">' . $successMessageProf . '</div>';
+                        if (isset($_SESSION['successMessagePersonalData'])) {
+                            echo '<div class="alert alert-success">' . $_SESSION['successMessagePersonalData'] . '</div>';
+                            unset($_SESSION['successMessagePersonalData']);
                         }
 
-                        // Display an email error message if one exists
-                        if (!empty($emailError)) {
-                            echo '<div class="alert alert-danger">' . $emailError . '</div>';
+                        if (isset($_SESSION['errorMessagePersonalData'])) {
+                            echo '<div class="alert alert-danger">' . $_SESSION['errorMessagePersonalData'] . '</div>';
+                            unset($_SESSION['errorMessagePersonalData']);
                         }
                         ?>
                         <form method="POST" action="/admin/controllers/profileChangePersonalData.php">
@@ -56,7 +56,7 @@
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <div class="mb-3"><label class="form-label" for="email"><strong>Email Address</strong></label><input class="form-control" type="email" id="email" placeholder="user@example.com" name="email" value="<?php echo $email; ?>"></div>
+                                    <div class="mb-3"><label class="form-label" for="email"><strong>Email Address</strong></label><input class="form-control" type="email" id="email" placeholder="user@example.com" disabled value="<?php echo $email; ?>"></div>
                                 </div>
                             </div>
                             <div class="mb-3"><button class="btn btn-primary btn-sm" type="submit" name="formuser">Save Settings</button></div>
