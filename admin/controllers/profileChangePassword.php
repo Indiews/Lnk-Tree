@@ -53,5 +53,6 @@ if (isset($_POST['formpass'])) {
     }
     // Close the database connection
     $conn->close();
-    header('Location: /admin/profile.php');
 }
+
+header('Location: /admin/profile.php');
