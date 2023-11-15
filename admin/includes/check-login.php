@@ -38,8 +38,6 @@ if ($result->num_rows === 0) {
 
 // If the user is logged in and the email exists in the database, you can proceed with displaying the protected content.
 
-// ... Your protected content code goes here ...
-
 // Close the database connection (optional but good practice)
 $stmt->close();
 $conn->close();
