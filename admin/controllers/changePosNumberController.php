@@ -1,7 +1,7 @@
 <?php
 if(isset($_POST['submit'])) {
     // Check if login is made
-    include('../includes/check-login.php');
+    include('../../includes/check-login.php');
 
     // Include the database configuration
     include('../../config.php');
