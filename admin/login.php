@@ -20,7 +20,7 @@ if (isset($_SESSION['email'])) {
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
 </head>
 
-<body class="bg-gradient-primary">
+<body class="bg-gradient-primary" style="background-color: #000000 !IMPORTANT; background-image: linear-gradient(180deg, #000000 10%, #000000 100%);">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-9 col-lg-12 col-xl-10">
@@ -33,7 +33,7 @@ if (isset($_SESSION['email'])) {
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h4 class="text-dark mb-4">Welcome Back!</h4>
+                                        <h4 class="text-dark mb-4">Welcome to Lnk Tree</h4>
                                     </div>
                                     <?php
                                     // Include the database configuration
@@ -87,11 +87,11 @@ if (isset($_SESSION['email'])) {
                                         <div class="mb-3"><input class="form-control form-control-user" type="password" id="exampleInputPassword" placeholder="Password" name="password"></div>
                                         <div class="mb-3">
                                             
-                                        </div><button class="btn btn-primary d-block btn-user w-100" type="submit" name="login">Login</button>
+                                        </div><button style="background-color: #000000 !important" class="btn btn-primary d-block btn-user w-100" type="submit" name="login">Login</button>
                                     </form>
                                     <!-- Temporarily Disabled -->
-                                    <!-- <div class="text-center"><a class="small" href="forgot-password.php">Forgot Password?</a></div> -->
-                                    <div class="text-center"><a class="small" href="register.php">Create an Account!</a></div>
+                                    <!-- <div class="text-center"><a class="small" href="forgot-password.php">Forgot Password?</a></div> 
+                                    <div class="text-center"><a class="small" href="register.php">Create an Account!</a></div>-->
                                 </div>
                             </div>
                         </div>
