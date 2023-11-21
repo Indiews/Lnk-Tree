@@ -53,13 +53,35 @@ if (isset($_SESSION['email'])) {
                                             $row = $result->fetch_assoc();
                                             $storedHashedPassword = $row['password']; // Replace 'password' with the actual column name
 
-                                            if (password_verify($password, $storedHashedPassword)) {
+                                            /*if (password_verify($password, $storedHashedPassword)) {
                                                 // Successful login, set a session or redirect to a dashboard page
                                                 session_start();
                                                 $_SESSION['email'] = $email;
                                                 header("Location: dashboard.php");
                                                 exit();
-                                            } else {
+                                            }*/
+                                            if (password_verify($password, $storedHashedPassword)) {
+                                                // Successful login, set a session or redirect to a dashboard page
+                                                session_start();
+                                                $_SESSION['email'] = $email;
+                                                
+                                                // Generate a random token and store it in the session
+                                                $token = bin2hex(random_bytes(32)); // Generates a 64-character hex token
+                                                $_SESSION['token'] = $token;
+                                            
+                                                // Prepare an update statement to store the token in the database
+                                                $updateQuery = "UPDATE users SET token = ? WHERE email = ?";
+                                                $updateStmt = $conn->prepare($updateQuery);
+                                                $updateStmt->bind_param("ss", $token, $email);
+                                                $updateStmt->execute();
+                                                $updateStmt->close();
+                                            
+                                                // Redirect to the dashboard page
+                                                header("Location: dashboard.php");
+                                                exit();
+                                            }                                            
+                                            else 
+                                            {
                                                 // Invalid credentials, display an error message
                                                 echo "<p class='text-danger'>Invalid login credentials. Please try again.</p>";
                                             }
