@@ -53,13 +53,7 @@ if (isset($_SESSION['email'])) {
                                             $row = $result->fetch_assoc();
                                             $storedHashedPassword = $row['password']; // Replace 'password' with the actual column name
 
-                                            /*if (password_verify($password, $storedHashedPassword)) {
-                                                // Successful login, set a session or redirect to a dashboard page
-                                                session_start();
-                                                $_SESSION['email'] = $email;
-                                                header("Location: dashboard.php");
-                                                exit();
-                                            }*/
+                                    
                                             if (password_verify($password, $storedHashedPassword)) {
                                                 // Successful login, set a session or redirect to a dashboard page
                                                 session_start();
