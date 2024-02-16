@@ -9,6 +9,7 @@
                     <li class="nav-item"><a class="nav-link" href="/admin/profile.php"><i class="fas fa-user"></i><span>Profile</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="/admin/team.php"><i class="fas fa-table"></i><span>Team Management</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="/admin/links.php"><i class="fas fa-external-link-alt"></i><span>Links</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/admin/ad-head.php"><i class="fas fa-code"></i><span>Ads & Header</span></a></li>
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
