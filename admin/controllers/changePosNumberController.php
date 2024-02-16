@@ -29,7 +29,7 @@ if(isset($_POST['submit'])) {
             $_SESSION['successMessage'] = 'Orders successfully changed.';
         } else {
             $_SESSION['errorMessage'] = 'You already have a link in that position.';
-            // If you want to stop processing further orders when an error occurs, you can use break; here.
+            
         }
     }
 

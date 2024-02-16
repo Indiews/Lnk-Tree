@@ -51,16 +51,16 @@
                         </div>
                         <div class="card-body">
                             <?php
-                            // Display a success message if settings are saved successfully
-                            if (isset($_SESSION['successMessage'])) {
-                                echo '<div class="alert alert-success">' . $_SESSION['successMessage'] . '</div>';
-                                unset($_SESSION['successMessage']);
+                            // Display success message
+                            if(isset($_SESSION['successMessage'])) {
+                                echo '<div class="success-message">' . $_SESSION['successMessage'] . '</div>';
+                                unset($_SESSION['successMessage']); // Clear the message to avoid displaying it again on page reload
                             }
 
-                            // Display an email error message if one exists
-                            if (isset($_SESSION['errorMessage'])) {
-                                echo '<div class="alert alert-danger">' . $_SESSION['errorMessage'] . '</div>';
-                                unset($_SESSION['errorMessage']);
+                            // Display error message
+                            if(isset($_SESSION['errorMessage'])) {
+                                echo '<div class="error-message">' . $_SESSION['errorMessage'] . '</div>';
+                                unset($_SESSION['errorMessage']); // Clear the message to avoid displaying it again on page reload
                             }
                             ?>
                             <?php
