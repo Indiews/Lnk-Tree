@@ -126,7 +126,7 @@
         }
     }
 ?>;
-    --font: 'Poppins', sans-serif;;
+    --font: 'Poppins', sans-serif;
     }
     </style>
 

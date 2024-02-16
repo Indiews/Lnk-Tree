@@ -77,28 +77,29 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <form method="POST" action="">
-
-                                        </form>
+                                    <form method="POST" action="/admin/controllers/changePosNumberController.php">
                                         <?php
-                                            while ($rowSearchLinks = mysqli_fetch_assoc($resultSearchLinks)) {
-                                                ?>
-                                                <tr>
-                                                    <td><?php echo $rowSearchLinks['name']; ?></td>
-                                                    <td><?php echo $rowSearchLinks['link']; ?></td>
-                                                    <td>
-                                                        <form method="POST" action="/admin/controllers/changePosNumberController.php">
-                                                            <input type="hidden" name="id" value="<?php echo $rowSearchLinks['id'];?>" />
-                                                            <input type="number" name="orderNum" value="<?php echo $rowSearchLinks['order']; ?>" required />
-                                                            <button class="btn btn-primary btn-sm" type="submit" name="submit">Change</button>
-                                                        </form>
-                                                    </td>
-                                                    <td><a style='color:Red' href="?remove&id=<?php echo $rowSearchLinks['id'];?>">Remove</a></td>
-                                                </tr>
-                                                <?php
-                                            }
+                                        while ($rowSearchLinks = mysqli_fetch_assoc($resultSearchLinks)) {
                                         ?>
-                                    </tbody>
+                                        <tr>
+                                            <td><?php echo $rowSearchLinks['name']; ?></td>
+                                            <td><?php echo $rowSearchLinks['link']; ?></td>
+                                            <td>
+                                                <input type="hidden" name="ids[]" value="<?php echo $rowSearchLinks['id']; ?>" />
+                                                <input type="number" name="orderNums[]" value="<?php echo $rowSearchLinks['order']; ?>" required />
+                                            </td>
+                                            <td><a style='color:Red' href="?remove&id=<?php echo $rowSearchLinks['id'];?>">Remove</a></td>
+                                        </tr>
+                                        <?php
+                                        }
+                                        ?>
+                                        <tr>
+                                            <td colspan="4">
+                                                <button class="btn btn-primary btn-sm" type="submit" name="submit">Change</button>
+                                            </td>
+                                        </tr>
+                                    </form>
+                                </tbody>
                                     <tfoot>
                                         <tr></tr>
                                     </tfoot>
