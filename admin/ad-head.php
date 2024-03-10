@@ -11,50 +11,8 @@ $result = $conn->query($sql);
 $websiteSettings = $result->fetch_assoc();
 
 // Initialize variables for form values with existing values
-$background = $websiteSettings['bkcolor'];
-$buttonBackgroundColor = $websiteSettings['btbkcolor'];
-$buttonBorderColor = $websiteSettings['btbocolor'];
-$webname = $websiteSettings['webname'];
-$description = $websiteSettings['description'];
+$codehead = $websiteSettings['codehead'];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    
-    // Check if input is provided, if not, keep the existing values
-    $background = isset($_POST['background']) ? $_POST['background'] : $background;
-    $buttonBackgroundColor = isset($_POST['button_back']) ? $_POST['button_back'] : $buttonBackgroundColor;
-    $buttonBorderColor = isset($_POST['button_border']) ? $_POST['button_border'] : $buttonBorderColor;
-    $webname = isset($_POST['webname']) ? $_POST['webname'] : $webname;
-    $description = isset($_POST['description']) ? $_POST['description'] : $description;
-
-    // Update settings in the database
-    $updateSql = "UPDATE website SET bkcolor = '$background', btbkcolor = '$buttonBackgroundColor', btbocolor = '$buttonBorderColor', webname = '$webname', description = '$description' WHERE id = 1";
-    if ($conn->query($updateSql) === TRUE) {
-        // Data updated successfully, you can display a success message
-        $successMessage = "Settings saved successfully.";
-    } else {
-        // Data update failed, display an error message
-        echo "Error updating data: " . $conn->error;
-    }
-
-    // Handle logo upload separately, if provided
-    if (!empty($_FILES['logo']['name'])) {
-        // Handle logo upload logic here
-        // ...
-
-        // Example logic to move uploaded logo to /assets/img/
-        $logoFileName = 'logo.' . pathinfo($_FILES['logo']['name'], PATHINFO_EXTENSION);
-        $logoFilePath = '../assets/img/' . $logoFileName;
-        if (move_uploaded_file($_FILES['logo']['tmp_name'], $logoFilePath)) {
-            // Logo uploaded successfully, you can update the database with the new logo file name if needed
-            $logoUpdateSql = "UPDATE website SET logo = '../assets/img/$logoFileName' WHERE id = 1";
-            if ($conn->query($logoUpdateSql) !== TRUE) {
-                echo "Error updating logo data: " . $conn->error;
-            }
-        } else {
-            echo "Error uploading logo.";
-        }
-    }
-}
 
 // Close the database connection
 $conn->close();
@@ -94,23 +52,17 @@ $conn->close();
                     <div class="col">
                         <div class="card shadow mb-3">
                             <div class="card-header py-3">
-                                <p class="text-primary m-0 fw-bold">Website Settings</p>
+                                <p class="text-primary m-0 fw-bold">Header Code</p>
                             </div>
                             <div class="card-body">
-                                <form method="POST" action="" enctype="multipart/form-data">
-                                    <div class="row">
-                                    <div class="mb-3"><label class="form-label" for="background"><strong>Background Color</strong></label><input class="form-control form-control-color" type="color" id="background" name="background" value="<?php echo $background; ?>"></div>
-                                    <div class="mb-3"><label class="form-label" for="button-back"><strong>Button Background Color</strong></label><input class="form-control form-control-color" type="color" id="button-back" name="button_back" value="<?php echo $buttonBackgroundColor; ?>"></div>
-                                    <div class="mb-3"><label class="form-label" for="button-border"><strong>Button Border Color</strong></label><input class="form-control form-control-color" type="color" id="button-border" name="button_border" value="<?php echo $buttonBorderColor; ?>"></div>
-                                    <div class="mb-3"><label class="form-label" for="webname"><strong>Website Name</strong></label><input class="form-control" type="text" id="webname" placeholder="My Brand" name="webname" value="<?php echo $webname; ?>"></div>
-                                    <div class="mb-3"><label class="form-label" for="description"><strong>Description</strong></label><input class="form-control" type="text" id="description" placeholder="I'm an awesome website" name="description" value="<?php echo $description; ?>"></div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="mb-3"><label class="form-label" for="logo"><strong>Upload Logo</strong></label><input class="form-control" type="file" id="logo" name="logo"></div>
+                            <form>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="mb-3"><label class="form-label" for="webname"><strong>HTML Code</strong></label><input class="form-control" type="text" id="headcode" placeholder="<head><br><script> and more..." name="codehead" style="height: calc(2.5em + 4.75rem + 2px);></div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="mb-3"><button class="btn btn-primary btn-sm" type="submit">Save Settings</button></div>
-                                </form>
+                                        <div class="mb-3"><button class="btn btn-primary btn-sm" type="submit">Save Settings</button></div>
+                                    </form>
                             </div>
                         </div>
                     </div>
