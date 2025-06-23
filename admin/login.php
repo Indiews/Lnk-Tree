@@ -20,7 +20,7 @@ if (isset($_SESSION['email'])) {
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
 </head>
 
-<body class="bg-gradient-primary" style="background-color: #000000 !IMPORTANT; background-image: linear-gradient(180deg, #000000 10%, #000000 100%);">
+<body class="bg-gradient-primary" style="background-image: linear-gradient(180deg,rgb(58, 58, 58) 10%, #000000 100%);">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-9 col-lg-12 col-xl-10">

@@ -1,4 +1,15 @@
-<?php // Include the database configuration
+<?php 
+    $configFile = __DIR__ . '/config.php';
+
+    // Check if config.php exists
+    if (!file_exists($configFile)) {
+    // Redirect to install.php
+    header('Location: install.php');
+    exit;
+}
+
+
+    // Include the database configuration
     include('config.php');?>
 
 <!DOCTYPE html>

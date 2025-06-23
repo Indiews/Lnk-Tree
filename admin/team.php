@@ -1,31 +1,35 @@
 <?php
-        // Check if login is made
-        include('includes/check-login.php');
-        
-        include('../config.php');
-        
+// Check if login is made
+include('includes/check-login.php'); // assuming this sets $loggedInEmail
 
-        $sql="SELECT * FROM users";
-        $queryCat=mysqli_query($conn, $sql) or die ($sql);
+include('../config.php');
 
+$sql="SELECT * FROM users";
+$queryUsers=mysqli_query($conn, $sql) or die ($sql);
+$total=mysqli_num_rows($queryUsers);
+if($total>0){
+    $fetch=mysqli_fetch_assoc($queryUsers);
+}
 
-        $sql="SELECT * FROM users";
-        $queryUsers=mysqli_query($conn, $sql) or die ($sql);
-        $total=mysqli_num_rows($queryUsers);
-        if($total>0){
-        $fetch=mysqli_fetch_assoc($queryUsers);
-        }
+if(isset($_GET['remove'])){
+    $id=$_GET['id'];
+    $table="users";
 
-        if(isset($_GET['remove'])){
-            $id=$_GET['id'];
-            $table="users";
-            $sql="DELETE FROM $table WHERE id=$id LIMIT 1";
-            mysqli_query($conn, $sql)  or die ($sql);
-            $path="?removed";
-            header("Location:$path");
-    
+    // Optional: Prevent deleting own account on server side too for safety
+    $sqlCheck = "SELECT email FROM users WHERE id=$id LIMIT 1";
+    $resultCheck = mysqli_query($conn, $sqlCheck) or die($sqlCheck);
+    $userToDelete = mysqli_fetch_assoc($resultCheck);
+
+    if($userToDelete['email'] != $email) {
+        $sql="DELETE FROM $table WHERE id=$id LIMIT 1";
+        mysqli_query($conn, $sql)  or die ($sql);
+    }
+
+    header("Location:?removed");
+    exit;
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -69,14 +73,21 @@
                                         </tr>
                                     </thead>
                                     <tbody> 
-                                    <?php $i=0; do { $i++;?>
+                                    <?php $i=0; do { $i++; ?>
                                         <tr>
-                                            <td><?php echo $fetch['name'];?> <?php echo $fetch['surname'];?></td>
-                                            <td><?php echo $fetch['email'];?></td>
-                                            <td><?php echo $fetch['permission'];?></td>
-                                            <td><a style='color:Red' href="?remove&id=<?php echo $fetch['id'];?>">Remove</a></td>
+                                            <td><?php echo htmlspecialchars($fetch['name']); ?> <?php echo htmlspecialchars($fetch['surname']); ?></td>
+                                            <td><?php echo htmlspecialchars($fetch['email']); ?></td>
+                                            <td><?php echo htmlspecialchars($fetch['permission']); ?></td>
+                                            <td>
+                                                <?php if($fetch['email'] != $email): ?>
+                                                    <a style='color:Red' href="?remove&id=<?php echo $fetch['id']; ?>">Remove</a>
+                                                <?php else: ?>
+                                                    <p style='color:Red' >Can't delete own user</p>
+                                                    
+                                                <?php endif; ?>
+                                            </td>
                                         </tr>
-                                        <?php } while($fetch=mysqli_fetch_assoc($queryUsers));?>
+                                    <?php } while($fetch=mysqli_fetch_assoc($queryUsers)); ?>
                                     </tbody>
                                         
                                     <tfoot>
