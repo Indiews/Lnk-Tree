@@ -76,30 +76,16 @@
                                             <th>DELETE?</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                    <form method="POST" action="/admin/controllers/changePosNumberController.php">
-                                        <?php
-                                        while ($rowSearchLinks = mysqli_fetch_assoc($resultSearchLinks)) {
-                                        ?>
-                                        <tr>
+                                    <tbody id="sortable">
+                                    <?php while ($rowSearchLinks = mysqli_fetch_assoc($resultSearchLinks)) { ?>
+                                        <tr data-id="<?php echo $rowSearchLinks['id']; ?>">
                                             <td><?php echo $rowSearchLinks['name']; ?></td>
                                             <td><?php echo $rowSearchLinks['link']; ?></td>
-                                            <td>
-                                                <input type="hidden" name="ids[]" value="<?php echo $rowSearchLinks['id']; ?>" />
-                                                <input type="number" name="orderNums[]" value="<?php echo $rowSearchLinks['order']; ?>" required />
-                                            </td>
+                                            <td class="order-number"><?php echo $rowSearchLinks['order']; ?></td>
                                             <td><a style='color:Red' href="?remove&id=<?php echo $rowSearchLinks['id'];?>">Remove</a></td>
                                         </tr>
-                                        <?php
-                                        }
-                                        ?>
-                                        <tr>
-                                            <td colspan="4">
-                                                <button class="btn btn-primary btn-sm" type="submit" name="submit">Change</button>
-                                            </td>
-                                        </tr>
-                                    </form>
-                                </tbody>
+                                    <?php } ?>
+                                    </tbody>
                                     <tfoot>
                                         <tr></tr>
                                     </tfoot>
@@ -193,6 +179,41 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/script.min.js"></script>
+
+    <!-- jQuery and jQuery UI for Drag and Drop -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+<script>
+$(function () {
+    $("#sortable").sortable({
+        update: function (event, ui) {
+            var order = [];
+            $("#sortable tr").each(function (index) {
+                order.push({
+                    id: $(this).data("id"),
+                    position: index + 1
+                });
+            });
+
+            $.ajax({
+                url: 'controllers/updateOrder.php',
+                type: 'POST',
+                data: { order: order },
+                success: function (response) {
+                    // Update order numbers in the table visually
+                    $("#sortable tr").each(function (index) {
+                        $(this).find(".order-number").text(index + 1);
+                    });
+                },
+                error: function () {
+                    alert("Failed to update order.");
+                }
+            });
+        }
+    });
+});
+</script>
+
 </body>
 
 </html>
