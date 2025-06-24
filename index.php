@@ -46,8 +46,6 @@
         }
     }
     ?></title>
-    
-
     <meta name="twitter:description" content="<?php
     $sql = "SELECT `description` FROM `website`";
 
@@ -63,9 +61,7 @@
         }
     }
     ?>">
-    
     <meta name="description" content="<?php
-    
     $sql = "SELECT `description` FROM `website`";
     $result = $conn->query($sql);
 
@@ -78,7 +74,6 @@
         }
     }
     ?>">
-    
     <meta name="twitter:title" content="<?php
     $sql = "SELECT `webname` FROM `website`";
     $result = $conn->query($sql);
@@ -92,7 +87,6 @@
 ">
     <link rel="stylesheet" href="assets/css/style.css"> 
     <style>
-    
     :root {
     --bkColor: <?php
     $sql = "SELECT `bkcolor` FROM `website`";
@@ -128,7 +122,20 @@
     --font: 'Poppins', sans-serif;
     }
     </style>
+    
+    <?php
+    
+    $sql = "SELECT `codehead` FROM `website`";
+    $result = $conn->query($sql);
 
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $codehead = $row["codehead"];
+
+            echo "$codehead";
+        }
+    }
+    ?>
 </head>
 
 <body>

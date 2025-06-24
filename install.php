@@ -45,6 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             `bkcolor` varchar(255) NOT NULL,
             `btbkcolor` varchar(255) NOT NULL,
             `btbocolor` varchar(255) NOT NULL,
+            `codehead` text NOT NULL,
             PRIMARY KEY (`id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;"
     ];
@@ -60,11 +61,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ('Maintained by Indiews', 2, 'https://indiews.com/'),
         ('Check Our Github', 1, 'https://github.com/Indiews/Lnk-Tree')");
 
-    $conn->query("INSERT INTO `users` (`name`, `surname`, `permission`, `email`, `password`, `token`) VALUES
-        ('Demo', 'User', 'admin', 'demo@indiews.com', '\$2y\$10\$Oz7AHLRVLnbXsF8HF26ivO8r99Ctx3yGbEw73OrMfr1x48ltY7PZO', '0')");
+    $conn->query('INSERT INTO `users` (`name`, `surname`, `permission`, `email`, `password`, `token`) VALUES
+        ("Default", "User", "admin", "lnktree@indiews.com", "$2y$10$d5MUILFt5de21Y1iEPNpiORYHNCr8Kt6KbAZDbncpZKWxwKxkR.9.", "new-user")');
 
     $conn->query("INSERT INTO `website` (`webname`, `lang`, `description`, `logo`, `bkcolor`, `btbkcolor`, `btbocolor`) VALUES
-        ('Lnk Tree Demo', 'en', 'Meet Lnk Tree. Your custom Lnk Tree.', 'https://cdn.indiews.com/lnk-tree/branding/001.png', '#000000', '#adadad', '#ffffff')");
+        ('Lnk Tree', 'en', 'Meet Lnk Tree. Your custom and open Link Tree alternative.', 'https://cdn.indiews.com/lnk-tree/branding/001.png', '#000000', '#adadad', '#ffffff')");
 
     // Build config.php content
     $configContent = <<<'PHP'
@@ -142,6 +143,11 @@ PHP;
                                     <div class="error-message"><?php echo $error_message; ?></div>
                                 <?php } ?>
                             </div>
+                            <div class="alert alert-info alert-dismissible fade show mt-4" role="alert">
+                            <strong>Default Account:</strong> Use <code>lnktree@indiews.com</code> and password <code>password</code> to log in after install.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+
                             <form class="user" method="POST" action="">
                                 <div class="mb-3">
                                     <input class="form-control form-control-user" type="text" name="db_host" placeholder="Database Host" value="localhost" required>
