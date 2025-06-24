@@ -8,33 +8,54 @@ include('../config.php');
 
 $error_message = ""; // Initialize an empty error message
 
+// Set default values for form fields
+$first_name = "";
+$last_name = "";
+$email = "";
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get user input from the registration form
-    $first_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];
-    $email = $_POST['email'];
+    // Sanitize and validate input
+    $first_name = htmlspecialchars(trim($_POST['first_name']));
+    $last_name = htmlspecialchars(trim($_POST['last_name']));
+    $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
     $password = $_POST['password'];
     $password_repeat = $_POST['password_repeat'];
 
+    // Check if email is valid
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error_message = "Error: Invalid email address.";
+    }
     // Check if the passwords match
-    if ($password !== $password_repeat) {
-        // Passwords do not match, set the error message
+    elseif ($password !== $password_repeat) {
         $error_message = "Error: Passwords do not match.";
     } else {
-        // Hash the password
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        // Check if email already exists
+        $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt->store_result();
 
-        // Insert the user into the database
-        $sql = "INSERT INTO users (name, surname, email, password, permission, token) VALUES ('$first_name', '$last_name', '$email', '$hashed_password', 'admin', 'new-user')";
-
-        if ($conn->query($sql) === TRUE) {
-            // Registration successful, redirect to login page
-            header("Location: login.php");
-            exit();
+        if ($stmt->num_rows > 0) {
+            $error_message = "Error: Email is already registered.";
         } else {
-            // Registration failed, set the error message
-            $error_message = "Error: " . $conn->error;
+            // Hash the password
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+            // Insert the user into the database using a prepared statement
+            $stmt = $conn->prepare("INSERT INTO users (name, surname, email, password, permission, token) VALUES (?, ?, ?, ?, 'admin', 'new-user')");
+            $stmt->bind_param("ssss", $first_name, $last_name, $email, $hashed_password);
+
+            if ($stmt->execute()) {
+                // Registration successful, redirect to login page
+                header("Location: login.php");
+                exit();
+            } else {
+                // Registration failed, set the error message
+                $error_message = "Error: " . $stmt->error;
+            }
         }
+
+        $stmt->close();
     }
 }
 
@@ -57,13 +78,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 
-<body class="bg-gradient-primary">
+<body class="bg-gradient-primary" style="background-image: linear-gradient(180deg,rgb(58, 58, 58) 10%, #000000 100%);">
     <div class="container">
         <div class="card shadow-lg o-hidden border-0 my-5">
             <div class="card-body p-0">
                 <div class="row">
                     <div class="col-lg-5 d-none d-lg-flex">
-                        <div class="flex-grow-1 bg-register-image" style="background-image: url(&quot;https://img.freepik.com/free-vector/mobile-login-concept-illustration_114360-83.jpg&quot;);"></div>
+                        <div class="flex-grow-1 bg-register-image" style="background-image: url(&quot;https://cdn.indiews.com/lnk-tree/branding/001.png&quot;);"></div>
                     </div>
                     <div class="col-lg-7">
                         <div class="p-5">
@@ -76,13 +97,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                             <form class="user" method="POST" action="">
                                 <div class="row mb-3">
-                                    <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="text" id="FirstName" placeholder="First Name" name="first_name" required></div>
-                                    <div class="col-sm-6"><input class="form-control form-control-user" type="text" id="LastName" placeholder="Last Name" name="last_name" required></div>
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input class="form-control form-control-user" type="text" id="FirstName" placeholder="First Name" name="first_name" value="<?php echo htmlspecialchars($first_name); ?>" required>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input class="form-control form-control-user" type="text" id="LastName" placeholder="Last Name" name="last_name" value="<?php echo htmlspecialchars($last_name); ?>" required>
+                                    </div>
                                 </div>
-                                <div class="mb-3"><input class="form-control form-control-user" type="email" id="InputEmail" aria-describedby="emailHelp" placeholder="Email Address" name="email" required></div>
+                                <div class="mb-3">
+                                    <input class="form-control form-control-user" type="email" id="InputEmail" aria-describedby="emailHelp" placeholder="Email Address" name="email" value="<?php echo htmlspecialchars($email); ?>" required>
+                                </div>
                                 <div class="row mb-3">
-                                    <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="password" id="PasswordInput" placeholder="Password" name="password" required></div>
-                                    <div class="col-sm-6"><input class="form-control form-control-user" type="password" id="RepeatPasswordInput" placeholder="Repeat Password" name="password_repeat" required></div>
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input class="form-control form-control-user" type="password" id="PasswordInput" placeholder="Password" name="password" required>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input class="form-control form-control-user" type="password" id="RepeatPasswordInput" placeholder="Repeat Password" name="password_repeat" required>
+                                    </div>
                                 </div>
                                 <button class="btn btn-primary d-block btn-user w-100" type="submit">Register Account</button>
                                 <hr>

@@ -1,27 +1,22 @@
 <?php 
     $configFile = __DIR__ . '/config.php';
 
-    // Check if config.php exists
+    // Check if install is made
     if (!file_exists($configFile)) {
-    // Redirect to install.php
     header('Location: install.php');
     exit;
-}
+    }
 
-
-    // Include the database configuration
-    include('config.php');?>
+    include('config.php');
+    ?>
 
 <!DOCTYPE html>
 <html lang="<?php
-    // Create a SQL query to retrieve the webname, lang, and description
     $sql = "SELECT `lang` FROM `website`";
 
-    // Execute the query
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        // Data found, loop through the results
         while ($row = $result->fetch_assoc()) {
             $lang = $row["lang"];
 
@@ -39,17 +34,14 @@
     <!-- Lnk Tree created by Indiews - Digital Agency -->
 
     <title><?php
-    // Create a SQL query to retrieve the webname, lang, and description
+    
     $sql = "SELECT `webname` FROM `website`";
-    // Execute the query
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        // Data found, loop through the results
         while ($row = $result->fetch_assoc()) {
             $webname = $row["webname"];
-            
-            // Display the data for each row
+
             echo "$webname";
         }
     }
@@ -57,14 +49,12 @@
     
 
     <meta name="twitter:description" content="<?php
-    // Create a SQL query to retrieve the webname, lang, and description
     $sql = "SELECT `description` FROM `website`";
 
-    // Execute the query
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        // Data found, loop through the results
+       
         while ($row = $result->fetch_assoc()) {
             $description = $row["description"];
 
@@ -75,13 +65,11 @@
     ?>">
     
     <meta name="description" content="<?php
-    // Create a SQL query to retrieve the webname, lang, and description
+    
     $sql = "SELECT `description` FROM `website`";
-    // Execute the query
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        // Data found, loop through the results
         while ($row = $result->fetch_assoc()) {
             $description = $row["description"];
 
@@ -144,51 +132,37 @@
 </head>
 
 <body>
-    <!-- User Photo -->
     <img id="userPhoto" src="<?php
-    // Create a SQL query to retrieve the logo
     $sql = "SELECT `logo` FROM `website`";
-    // Execute the query
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        // Data found, loop through the results
         while ($row = $result->fetch_assoc()) {
             $logo = $row["logo"];
             
-            // Display the data for each row
             echo "$logo";
         }
     }
     ?>" alt="<?php
-    // Create a SQL query to retrieve the webname, lang, and description
     $sql = "SELECT `webname` FROM `website`";
-    // Execute the query
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        // Data found, loop through the results
         while ($row = $result->fetch_assoc()) {
             $webname = $row["webname"];
             
-            // Display the data for each row
             echo "$webname";
         }
     }
     ?>">
     
-    <!-- Link Buttons -->
     <div id="links">
         <?php
-        // Create a SQL query to retrieve the webname, lang, and description
         $sql = "SELECT * FROM `links` ORDER BY `order` ASC";
-        // Execute the query
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
-            // Data found, loop through the results
             while ($row = $result->fetch_assoc()) {
-                // Display the data for each row
                 echo "<a class='link' href='" . $row['link'] . "' target='_blank'>" . $row['name'] . "</a>";
             }
         }
