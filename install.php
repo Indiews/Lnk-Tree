@@ -1,4 +1,9 @@
 <?php
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $db_host = $_POST["db_host"];
     $db_user = $_POST["db_user"];
@@ -64,8 +69,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->query('INSERT INTO `users` (`name`, `surname`, `permission`, `email`, `password`, `token`) VALUES
         ("Default", "User", "admin", "lnktree@indiews.com", "$2y$10$d5MUILFt5de21Y1iEPNpiORYHNCr8Kt6KbAZDbncpZKWxwKxkR.9.", "new-user")');
 
-    $conn->query("INSERT INTO `website` (`webname`, `lang`, `description`, `logo`, `bkcolor`, `btbkcolor`, `btbocolor`) VALUES
-        ('Lnk Tree', 'en', 'Meet Lnk Tree. Your custom and open Link Tree alternative.', 'https://cdn.indiews.com/lnk-tree/branding/001.png', '#000000', '#adadad', '#ffffff')");
+    $conn->query("INSERT INTO `website` (`webname`, `lang`, `description`, `logo`, `bkcolor`, `btbkcolor`, `btbocolor`, `codehead`) VALUES
+        ('Lnk Tree', 'en', 'Meet Lnk Tree. Your custom and open Link Tree alternative.', 'https://cdn.indiews.com/lnk-tree/branding/001.png', '#000000', '#adadad', '#ffffff','')");
 
     // Build config.php content
     $configContent = <<<'PHP'
