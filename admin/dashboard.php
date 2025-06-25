@@ -106,7 +106,7 @@ $conn->close();
                                     <div class="mb-3"><label class="form-label" for="description"><strong>Description</strong></label><input class="form-control" type="text" id="description" placeholder="I'm an awesome website" name="description" value="<?php echo $description; ?>"></div>
                                     <div class="row">
                                         <div class="col">
-                                            <div class="mb-3"><label class="form-label" for="logo"><strong>Upload Logo</strong></label><input class="form-control" type="image" id="logo" name="logo"></div>
+                                            <div class="mb-3"><label class="form-label" for="logo"><strong>Upload Logo</strong></label><input class="form-control" type="file" id="logo" name="logo" accept="image/*"></div>
                                         </div>
                                     </div>
                                     <div class="mb-3"><button class="btn btn-primary btn-sm" type="submit">Save Settings</button></div>
