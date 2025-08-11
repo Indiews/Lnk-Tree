@@ -47,7 +47,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             `btbocolor` varchar(255) NOT NULL,
             `codehead` text NOT NULL,
             PRIMARY KEY (`id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;"
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;",
+
+        "CREATE TABLE IF NOT EXISTS `login_attempts` (
+        `id` int(11) NOT NULL AUTO_INCREMENT,
+        `ip_address` varchar(45) NOT NULL,
+        `attempt_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY (`id`),
+        INDEX (`ip_address`),
+        INDEX (`attempt_time`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;"
     ];
 
     foreach ($createTables as $sql) {
