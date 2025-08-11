@@ -1,21 +1,20 @@
-
 <?php
-        // Check if login is made
-        include('includes/check-login.php');
+// Check if login is made
+include('includes/check-login.php');
 
-        // Include the database configuration
-        include('../config.php');
+// Include the database configuration
+include('../config.php');
 
-        $searchLinksSql = "SELECT * FROM links ORDER BY `order` ASC";
-        $resultSearchLinks = $conn->query($searchLinksSql);
+$searchLinksSql = "SELECT * FROM links ORDER BY `order` ASC";
+$resultSearchLinks = $conn->query($searchLinksSql);
 
-        if(isset($_GET['remove'])) {
-            $id = $_GET['id'];
-            $sql = "DELETE FROM links WHERE id=$id LIMIT 1";
-            mysqli_query($conn, $sql) or die ($sql);
-            $path = "?removed";
-            header("Location:$path");
-        }
+if (isset($_GET['remove'])) {
+    $id = $_GET['id'];
+    $sql = "DELETE FROM links WHERE id=$id LIMIT 1";
+    mysqli_query($conn, $sql) or die($sql);
+    $path = "?removed";
+    header("Location:$path");
+}
 ?>
 
 <!DOCTYPE html>
@@ -28,48 +27,54 @@
     <link rel="stylesheet" href="../admin/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <style>
+        /* Drag handle styling */
+        .drag-handle {
+            cursor: grab;
+            font-size: 18px;
+            text-align: center;
+            width: 40px;
+        }
+        .ui-state-highlight {
+            background-color: #f0f0f0;
+            height: 50px;
+        }
+    </style>
 </head>
 
 <body id="page-top">
-        <?php
-        // Include the sidebar.php file
-        include('includes/sidebar.php');
-        ?>
+    <?php include('includes/sidebar.php'); ?>
 
-        <div class="d-flex flex-column" id="content-wrapper">
-            <div id="content">
-        
-        <?php
-        // Include the NavBar file
-        include('includes/nav-top.php');
-        ?>
-                <div class="container-fluid">
-                    <h3 class="text-dark mb-4">Links</h3>
-                    <div class="card shadow">
-                        <div class="card-header py-3">
-                            <p class="text-primary m-0 fw-bold">Links Management</p>
-                        </div>
-                        <div class="card-body">
-                            <?php
-                            // Display success message
-                            if(isset($_SESSION['successMessage'])) {
-                                echo '<div class="success-message">' . $_SESSION['successMessage'] . '</div>';
-                                unset($_SESSION['successMessage']); // Clear the message to avoid displaying it again on page reload
-                            }
+    <div class="d-flex flex-column" id="content-wrapper">
+        <div id="content">
 
-                            // Display error message
-                            if(isset($_SESSION['errorMessage'])) {
-                                echo '<div class="error-message">' . $_SESSION['errorMessage'] . '</div>';
-                                unset($_SESSION['errorMessage']); // Clear the message to avoid displaying it again on page reload
-                            }
-                            ?>
-                            <?php
-                                if (mysqli_num_rows($resultSearchLinks) > 0) {
-                            ?>
-                            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
-                                <table class="table my-0" id="dataTable">
+            <?php include('includes/nav-top.php'); ?>
+
+            <div class="container-fluid">
+                <h3 class="text-dark mb-4">Links</h3>
+                <div class="card shadow">
+                    <div class="card-header py-3">
+                        <p class="text-primary m-0 fw-bold">Links Management</p>
+                    </div>
+                    <div class="card-body">
+                        <?php
+                        if (isset($_SESSION['successMessage'])) {
+                            echo '<div class="alert alert-success">' . $_SESSION['successMessage'] . '</div>';
+                            unset($_SESSION['successMessage']);
+                        }
+
+                        if (isset($_SESSION['errorMessage'])) {
+                            echo '<div class="alert alert-danger">' . $_SESSION['errorMessage'] . '</div>';
+                            unset($_SESSION['errorMessage']);
+                        }
+                        ?>
+
+                        <?php if (mysqli_num_rows($resultSearchLinks) > 0) { ?>
+                            <div class="table-responsive table mt-2">
+                                <table class="table my-0">
                                     <thead>
                                         <tr>
+                                            <th>Move</th>
                                             <th>Display Name</th>
                                             <th>URL</th>
                                             <th>Position</th>
@@ -77,143 +82,138 @@
                                         </tr>
                                     </thead>
                                     <tbody id="sortable">
-                                    <?php while ($rowSearchLinks = mysqli_fetch_assoc($resultSearchLinks)) { ?>
-                                        <tr data-id="<?php echo $rowSearchLinks['id']; ?>">
-                                            <td><?php echo $rowSearchLinks['name']; ?></td>
-                                            <td><?php echo $rowSearchLinks['link']; ?></td>
-                                            <td class="order-number"><?php echo $rowSearchLinks['order']; ?></td>
-                                            <td><a style='color:Red' href="?remove&id=<?php echo $rowSearchLinks['id'];?>">Remove</a></td>
-                                        </tr>
-                                    <?php } ?>
+                                        <?php while ($rowSearchLinks = mysqli_fetch_assoc($resultSearchLinks)) { ?>
+                                            <tr data-id="<?php echo $rowSearchLinks['id']; ?>">
+                                                <td class="drag-handle">☰</td>
+                                                <td><?php echo $rowSearchLinks['name']; ?></td>
+                                                <td><?php echo $rowSearchLinks['link']; ?></td>
+                                                <td class="order-number"><?php echo $rowSearchLinks['order']; ?></td>
+                                                <td><a style='color:Red' href="?remove&id=<?php echo $rowSearchLinks['id']; ?>">Remove</a></td>
+                                            </tr>
+                                        <?php } ?>
                                     </tbody>
-                                    <tfoot>
-                                        <tr></tr>
-                                    </tfoot>
                                 </table>
                             </div>
-                            <?php
-                                } else {
-                                    echo 'No results were found.';
-                                }
-                            ?>
-                        </div>
+                        <?php } else {
+                            echo 'No results were found.';
+                        } ?>
                     </div>
                 </div>
-                <div class="container-fluid">
-                    <h3 class="text-dark mb-4"></h3>
-                    <div class="col">
-                        <div class="card shadow mb-3">
-                            <div class="card-header py-3">
-                                <p class="text-primary m-0 fw-bold">Add Link</p>
-                            </div>
-                            <div class="card-body">
-                                                      
-                                <?php
-                                // Check if the form is submitted
-                                if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                                    $name = $_POST['name'];
-                                    $link = $_POST['link'];
+            </div>
 
-                                    // Get the maximum 'order' value from the database
-                                    $maxOrderQuery = "SELECT MAX(`order`) FROM links";
-                                    $result = $conn->query($maxOrderQuery);
-                                    $row = $result->fetch_assoc();
-                                    $maxOrder = $row['MAX(`order`)'];
-                                    $newOrder = $maxOrder + 1;
+            <div class="container-fluid">
+                <h3 class="text-dark mb-4"></h3>
+                <div class="col">
+                    <div class="card shadow mb-3">
+                        <div class="card-header py-3">
+                            <p class="text-primary m-0 fw-bold">Add Link</p>
+                        </div>
+                        <div class="card-body">
+                            <?php
+                            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                                $name = $_POST['name'];
+                                $link = $_POST['link'];
 
-                                    // Insert data into the database with the new 'order' value
-                                    $sql = "INSERT INTO links (name, link, `order`) VALUES (?, ?, ?)";
-                                    $stmt = $conn->prepare($sql);
-                                    $stmt->bind_param("ssi", $name, $link, $newOrder);
+                                $maxOrderQuery = "SELECT MAX(`order`) FROM links";
+                                $result = $conn->query($maxOrderQuery);
+                                $row = $result->fetch_assoc();
+                                $maxOrder = $row['MAX(`order`)'];
+                                $newOrder = $maxOrder + 1;
 
-                                    if ($stmt->execute()) {
-                                        $successMessage = "Link added successfully!";
-                                        echo '<meta http-equiv="refresh" content="2;url=links.php">';
-                                    } else {
-                                        $errorMessage = "Error: " . $stmt->error;
+                                $sql = "INSERT INTO links (name, link, `order`) VALUES (?, ?, ?)";
+                                $stmt = $conn->prepare($sql);
+                                $stmt->bind_param("ssi", $name, $link, $newOrder);
 
-                                        //echo "Error: " . $stmt->error;
-                                    }
-
-                                    $stmt->close();
+                                if ($stmt->execute()) {
+                                    $successMessage = "Link added successfully!";
+                                    echo '<meta http-equiv="refresh" content="2;url=links.php">';
+                                } else {
+                                    $errorMessage = "Error: " . $stmt->error;
                                 }
 
-                                $conn->close();
-                                ?>
+                                $stmt->close();
+                            }
 
-                                
-                                <form method="POST">
+                            $conn->close();
+                            ?>
+
+                            <form method="POST">
                                 <?php
                                 if (!empty($successMessage)) {
-                                echo '<div class="alert alert-success">' . $successMessage . '</div>';
-                                 }
-                                
-                                 if (!empty($errorMessage)) {
-                                    echo '<div class="alert alert-danger">' . $errorMessag . '</div>';
+                                    echo '<div class="alert alert-success">' . $successMessage . '</div>';
                                 }
-                                 
+                                if (!empty($errorMessage)) {
+                                    echo '<div class="alert alert-danger">' . $errorMessage . '</div>';
+                                }
                                 ?>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="mb-3"><label class="form-label" for="name"><strong>Display Name</strong></label><input class="form-control" type="text" id="name" placeholder="Website" name="name" required></div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="name"><strong>Display Name</strong></label>
+                                            <input class="form-control" type="text" id="name" placeholder="Website" name="name" required>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="mb-3"><label class="form-label" for="link"><strong>Link</strong></label><input class="form-control" type="text" id="link" placeholder="https://lnk-tree.com" name="link" required></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="link"><strong>Link</strong></label>
+                                            <input class="form-control" type="text" id="link" placeholder="https://lnk-tree.com" name="link" required>
                                         </div>
                                     </div>
-                                    <div class="mb-3"><button class="btn btn-primary btn-sm" type="submit">Save Link</button></div>
-                                </form>
-                                
-                            </div>
+                                </div>
+                                <div class="mb-3"><button class="btn btn-primary btn-sm" type="submit">Save Link</button></div>
+                            </form>
+
                         </div>
                     </div>
                 </div>
             </div>
-            <?php
-            // Add footer
-            include('includes/footer.php');
-            ?>
         </div>
+
+        <?php include('includes/footer.php'); ?>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets/js/script.min.js"></script>
 
-    <!-- jQuery and jQuery UI for Drag and Drop -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
-<script>
-$(function () {
-    $("#sortable").sortable({
-        update: function (event, ui) {
-            var order = [];
-            $("#sortable tr").each(function (index) {
-                order.push({
-                    id: $(this).data("id"),
-                    position: index + 1
-                });
-            });
+    <!-- jQuery and jQuery UI -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
 
-            $.ajax({
-                url: 'controllers/updateOrder.php',
-                type: 'POST',
-                data: { order: order },
-                success: function (response) {
-                    // Update order numbers in the table visually
+    <!-- jQuery UI Touch Punch for mobile drag support -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+
+    <script>
+        $(function () {
+            $("#sortable").sortable({
+                handle: ".drag-handle",
+                placeholder: "ui-state-highlight",
+                delay: 100, // Helps prevent accidental drags on mobile
+                update: function () {
+                    var order = [];
                     $("#sortable tr").each(function (index) {
-                        $(this).find(".order-number").text(index + 1);
+                        order.push({
+                            id: $(this).data("id"),
+                            position: index + 1
+                        });
                     });
-                },
-                error: function () {
-                    alert("Failed to update order.");
+
+                    $.ajax({
+                        url: 'controllers/updateOrder.php',
+                        type: 'POST',
+                        data: { order: order },
+                        success: function () {
+                            $("#sortable tr").each(function (index) {
+                                $(this).find(".order-number").text(index + 1);
+                            });
+                        },
+                        error: function () {
+                            alert("Failed to update order.");
+                        }
+                    });
                 }
             });
-        }
-    });
-});
-</script>
-
+        });
+    </script>
 </body>
-
 </html>
