@@ -1,0 +1,128 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Link {
+  id        Int             @id @default(autoincrement())
+  name      String
+  link      String
+  slug      String          @unique
+  clicks    Int             @default(0)
+  order     Int             @default(0)
+  analytics LinkAnalytics[]
+  pageLinks PageLink[]
+
+  @@map("links")
+}
+
+model User {
+  id               Int     @id @default(autoincrement())
+  name             String
+  surname          String
+  permission       String
+  email            String  @unique
+  password         String
+  token            String?
+  twoFactorSecret  String?
+  twoFactorEnabled Boolean @default(false)
+}
+
+model Website {
+  id          Int    @id @default(autoincrement())
+  webname     String
+  lang        String
+  description String
+  logo        String
+  bkcolor     String
+  btbkcolor   String
+  btbocolor   String
+  codehead    String
+}
+
+model LoginAttempt {
+  id          Int      @id @default(autoincrement())
+  ipAddress   String
+  attemptTime DateTime @default(now())
+
+  @@index([ipAddress])
+  @@index([attemptTime])
+}
+
+model LinkAnalytics {
+  id        Int      @id @default(autoincrement())
+  linkId    Int
+  timestamp DateTime @default(now())
+  browser   String?
+  os        String?
+  device    String?
+  referer   String?
+  country   String?
+  city      String?
+  link      Link     @relation(fields: [linkId], references: [id], onDelete: Cascade)
+
+  @@index([linkId])
+  @@map("link_analytics")
+}
+
+model Page {
+  id          Int        @id @default(autoincrement())
+  slug        String     @unique
+  name        String
+  description String?
+  logo        String?
+  bkcolor     String     @default("#f4f4f4")
+  btbkcolor   String     @default("#000000")
+  btbocolor   String     @default("#000000")
+  isHome      Boolean         @default(false)
+  links       PageLink[]
+  analytics   PageAnalytics[]
+
+  @@map("pages")
+}
+
+model PageLink {
+  id     Int  @id @default(autoincrement())
+  pageId Int
+  linkId Int
+  order  Int  @default(0)
+  link   Link @relation(fields: [linkId], references: [id], onDelete: Cascade)
+  page   Page @relation(fields: [pageId], references: [id], onDelete: Cascade)
+
+  @@unique([pageId, linkId])
+  @@index([pageId])
+  @@index([linkId])
+  @@map("page_links")
+}
+
+model Invitation {
+  id      Int      @id @default(autoincrement())
+  email   String   @unique
+  token   String   @unique
+  expires DateTime
+  name    String
+  surname String
+  role    String   @default("admin")
+
+  @@map("invitations")
+}
+
+model PageAnalytics {
+  id        Int      @id @default(autoincrement())
+  pageId    Int
+  timestamp DateTime @default(now())
+  browser   String?
+  os        String?
+  device    String?
+  referer   String?
+  country   String?
+  city      String?
+  page      Page     @relation(fields: [pageId], references: [id], onDelete: Cascade)
+
+  @@index([pageId])
+  @@map("page_analytics")
+}
